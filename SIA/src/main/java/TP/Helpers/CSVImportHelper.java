@@ -17,9 +17,10 @@ public class CSVImportHelper {
     }
 
     public void getData(String path){
+        //How serialize and deserializa data
         String json = this.gson.toJson("listaDePontos");
 
-        //How serialize and deserializa data
+
         this.redisService.setData(Constants.Equipment.front,json);
     }
 }
