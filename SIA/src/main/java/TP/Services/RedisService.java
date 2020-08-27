@@ -11,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Getter
@@ -32,12 +34,13 @@ public class RedisService implements IService {
 
 
     @Override
-    public Set<Equipment> getByIndex(String key) {
+    public Map<Integer,Equipment> getByIndex(String key) {
         Set<String> data = this.jedis.smembers(key);
-        Set<Equipment> equipment = new HashSet<Equipment>();
+        Map<Integer,Equipment> equipment = new HashMap<Integer,Equipment>();
 
         for(String s : data){
-            equipment.add(this.gson.fromJson(s,Equipment.class));
+            Equipment aux = this.gson.fromJson(s,Equipment.class);
+            equipment.put(aux.getId(),aux);
         }
         return equipment;
     }

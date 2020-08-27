@@ -1,25 +1,16 @@
 package TP.Models;
 
-import TP.Interfaces.IPlayer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class Player implements IPlayer {
-    private String name;
-    private Equipment equipment;
-    private double height;
-    private double attack;
-    private double defense;
-    private double performance;
-    private double strength;
-    private double agility;
-    private double pericia;
-    private double health;
-    private double resistence;
+public class Warrior extends IPlayer {
+
 
     @Override
     public Double calculateAttack() {
