@@ -32,5 +32,17 @@ public class Chromosome implements IMutation {
         this.chromosome[5] = armourId;
     }
 
+    public boolean equals(Object o){
+        if(o == null || o.getClass() != this.getClass()) return false;
+        if(o == this) return true;
+        Chromosome c = (Chromosome) o;
+        return Arrays.equals(chromosome, c.chromosome);
+    }
+
+    public String toString(){
+        StringBuilder ret = new StringBuilder();
+        Arrays.stream(chromosome).forEach(i -> ret.append(i.toString()).append(" "));
+        return ret.append("\n").toString();
+    }
 
 }
