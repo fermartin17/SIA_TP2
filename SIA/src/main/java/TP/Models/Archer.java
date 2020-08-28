@@ -1,43 +1,17 @@
 package TP.Models;
 
-public class Archer extends IPlayer{
-    @Override
-    public Double calculateAttack() {
-        return null;
-    }
+import lombok.Getter;
+import lombok.Setter;
 
-    @Override
-    public Double calculateDefense() {
-        return null;
-    }
+@Getter
+@Setter
+public class Archer extends BasePlayer {
 
+    public Archer(){
+        super();
+    }
     @Override
     public Double calculatePerformance() {
-        return null;
-    }
-
-    @Override
-    public Double calculateStrength() {
-        return null;
-    }
-
-    @Override
-    public Double calculateAgility() {
-        return null;
-    }
-
-    @Override
-    public Double calculatePericia() {
-        return null;
-    }
-
-    @Override
-    public Double calculateHealth() {
-        return null;
-    }
-
-    @Override
-    public Double calculateResistence() {
-        return null;
+        return 0.9 * getAttack() + 0.1 * getDefense();
     }
 }

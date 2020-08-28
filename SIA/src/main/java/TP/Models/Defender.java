@@ -1,43 +1,17 @@
 package TP.Models;
 
-public class Defender extends IPlayer{
-    @Override
-    public Double calculateAttack() {
-        return null;
-    }
+import lombok.Getter;
+import lombok.Setter;
 
-    @Override
-    public Double calculateDefense() {
-        return null;
-    }
+@Getter
+@Setter
+public class Defender extends BasePlayer {
 
+    public Defender(){
+        super();
+    }
     @Override
     public Double calculatePerformance() {
-        return null;
-    }
-
-    @Override
-    public Double calculateStrength() {
-        return null;
-    }
-
-    @Override
-    public Double calculateAgility() {
-        return null;
-    }
-
-    @Override
-    public Double calculatePericia() {
-        return null;
-    }
-
-    @Override
-    public Double calculateHealth() {
-        return null;
-    }
-
-    @Override
-    public Double calculateResistence() {
-        return null;
+        return 0.3 * getAttack() + 0.8 * getDefense();
     }
 }
