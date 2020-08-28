@@ -1,43 +1,17 @@
 package TP.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Infiltrate extends BasePlayer {
-    @Override
-    public Double calculateAttack() {
-        return null;
-    }
 
-    @Override
-    public Double calculateDefense() {
-        return null;
+    public Infiltrate(){
+        super();
     }
-
     @Override
     public Double calculatePerformance() {
-        return null;
-    }
-
-    @Override
-    public Double calculateStrength() {
-        return null;
-    }
-
-    @Override
-    public Double calculateAgility() {
-        return null;
-    }
-
-    @Override
-    public Double calculatePericia() {
-        return null;
-    }
-
-    @Override
-    public Double calculateHealth() {
-        return null;
-    }
-
-    @Override
-    public Double calculateResistence() {
-        return null;
+        return 0.8 * getAttack() + 0.3 * getDefense();
     }
 }

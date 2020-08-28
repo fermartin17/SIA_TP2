@@ -1,43 +1,17 @@
 package TP.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Archer extends BasePlayer {
-    @Override
-    public Double calculateAttack() {
-        return null;
-    }
 
-    @Override
-    public Double calculateDefense() {
-        return null;
+    public Archer(){
+        super();
     }
-
     @Override
     public Double calculatePerformance() {
-        return null;
-    }
-
-    @Override
-    public Double calculateStrength() {
-        return null;
-    }
-
-    @Override
-    public Double calculateAgility() {
-        return null;
-    }
-
-    @Override
-    public Double calculatePericia() {
-        return null;
-    }
-
-    @Override
-    public Double calculateHealth() {
-        return null;
-    }
-
-    @Override
-    public Double calculateResistence() {
-        return null;
+        return 0.9 * getAttack() + 0.1 * getDefense();
     }
 }
