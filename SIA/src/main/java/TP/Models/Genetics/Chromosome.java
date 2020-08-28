@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.Arrays;
 
 @Getter
-public class Chromosome implements IMutation {
+public class Chromosome {
 
     private Integer[] chromosome;
     public static final int S = 6;
