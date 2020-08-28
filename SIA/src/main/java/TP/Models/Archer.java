@@ -1,6 +1,6 @@
 package TP.Models;
 
-public class Archer extends IPlayer{
+public class Archer extends BasePlayer {
     @Override
     public Double calculateAttack() {
         return null;

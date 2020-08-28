@@ -1,6 +1,6 @@
 package TP.Models;
 
-public class Defender extends IPlayer{
+public class Defender extends BasePlayer {
     @Override
     public Double calculateAttack() {
         return null;

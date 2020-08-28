@@ -7,6 +7,7 @@ import java.util.Set;
 
 public interface IService {
 
-    Map<Integer,Equipment> getByIndex(String key);
+    Map<Integer,Equipment> getData(String key);
     void setData(String key,String data);
+    void deleteByKey(String key);
 }

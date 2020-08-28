@@ -23,4 +23,6 @@ public class Equipment {
         this.pericia = pericia;
         this.resistence = resistence;
     }
+
+    public Equipment(){}
 }

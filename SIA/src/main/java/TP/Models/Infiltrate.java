@@ -1,6 +1,6 @@
 package TP.Models;
 
-public class Infiltrate extends IPlayer{
+public class Infiltrate extends BasePlayer {
     @Override
     public Double calculateAttack() {
         return null;

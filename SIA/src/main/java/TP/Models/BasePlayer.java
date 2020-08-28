@@ -4,7 +4,7 @@ import TP.Models.Equipment;
 
 import java.util.List;
 
-public abstract class IPlayer {
+public abstract class BasePlayer {
 
     private String name;
     private List<Equipment> equipment;

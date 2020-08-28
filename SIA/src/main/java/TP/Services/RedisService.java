@@ -25,6 +25,7 @@ public class RedisService implements IService {
 
     public RedisService() {
         this.jedis = new Jedis("redis://127.0.0.1:6379");
+        this.gson = new Gson();
     }
 
     @Override
@@ -34,14 +35,20 @@ public class RedisService implements IService {
 
 
     @Override
-    public Map<Integer,Equipment> getByIndex(String key) {
+    public Map<Integer,Equipment> getData(String key) {
         Set<String> data = this.jedis.smembers(key);
         Map<Integer,Equipment> equipment = new HashMap<Integer,Equipment>();
+
 
         for(String s : data){
             Equipment aux = this.gson.fromJson(s,Equipment.class);
             equipment.put(aux.getId(),aux);
         }
         return equipment;
+    }
+
+    @Override
+    public void deleteByKey(String key){
+        this.jedis.del(key);
     }
 }
