@@ -1,23 +1,44 @@
-package TP.Models.Genetics;
+package TP.Models.Genetics.Mutations;
 
 import TP.Interfaces.IMutation;
+import TP.Models.Genetics.Chromosome;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class MultiGenLimitedMutation implements IMutation {
+public class LimitedMultiGenMutation extends Mutation {
 
-    private static int M = 4;
+    @Getter
+    @Setter
+    private int M = 4;
+
+    public LimitedMultiGenMutation(double mutationProbability) {
+        super(mutationProbability);
+    }
+
+    public LimitedMultiGenMutation(double mutationProbability, int M){
+        super(mutationProbability);
+        this.M = M;
+    }
 
     @Override
     public Chromosome mutate(Chromosome c) {
+        //revisar si se debe mutar
+        if(ThreadLocalRandom.current().nextDouble() < getMutationProbability()) return c;
+        //se debe mutar
         Chromosome ret = new Chromosome(c);
-        //elegir una cantidad de genes entre 0 y M TODO: definir m en archivo de configuración
+        //elegir una cantidad de genes entre 0 y M
         int nOfMutations = ThreadLocalRandom.current().nextInt(0, M +1);
         Integer[] candidatesToMutation = new Integer[nOfMutations];
         //definir los genes candidatos
         for(int i = 0; i < candidatesToMutation.length; i++){
             candidatesToMutation[i] = ThreadLocalRandom.current().nextInt(0, Chromosome.S +1);
         }
+        return mutateCandidates(ret, candidatesToMutation);
+    }
+
+    public Chromosome mutateCandidates(Chromosome chromosome, Integer[] candidatesToMutation){
         //el gen de altura puede ir desde 130 hasta 200 cm
         //los genes de items pueden ir desde 0 hasta 1.000.000
         int upperBound, lowerBound;
@@ -31,8 +52,8 @@ public class MultiGenLimitedMutation implements IMutation {
                 lowerBound = 0;
             }
             //cambiarlo por otro valor entre
-            ret.getChromosome()[i] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound +1);
+            chromosome.getChromosome()[i] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound +1);
         }
-        return ret;
+        return chromosome;
     }
 }

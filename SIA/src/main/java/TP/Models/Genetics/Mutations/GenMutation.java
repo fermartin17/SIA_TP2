@@ -1,13 +1,21 @@
-package TP.Models.Genetics;
+package TP.Models.Genetics.Mutations;
 
 import TP.Interfaces.IMutation;
+import TP.Models.Genetics.Chromosome;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GenMutation implements IMutation {
+public class GenMutation extends Mutation {
+
+    public GenMutation(double mutationProbability) {
+        super(mutationProbability);
+    }
 
     @Override
     public Chromosome mutate(Chromosome c) {
+        //revisar si se debe mutar
+        if(ThreadLocalRandom.current().nextDouble() < getMutationProbability()) return c;
+        //se debe mutar
         Chromosome ret = new Chromosome(c);
         //elegir un gen al azar
         int r = ThreadLocalRandom.current().nextInt(0, Chromosome.S +1);
