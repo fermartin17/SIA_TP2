@@ -1,6 +1,7 @@
 package TP.Models.Genetics;
 
 import TP.Interfaces.ICrossover;
+import TP.Models.Genetics.Crossovers.OnePointCrossOver;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

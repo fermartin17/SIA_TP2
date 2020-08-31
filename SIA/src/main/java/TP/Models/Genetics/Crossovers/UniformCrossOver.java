@@ -1,6 +1,8 @@
-package TP.Models.Genetics;
+package TP.Models.Genetics.Crossovers;
 
 import TP.Interfaces.ICrossover;
+import TP.Models.Genetics.Chromosome;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class UniformCrossOver implements ICrossover {
