@@ -14,6 +14,7 @@ import TP.Models.BasePlayer;
 import TP.Models.BaseSelection;
 import TP.Models.CutCriteria.*;
 import TP.Models.Equipment;
+import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
 
 import java.util.LinkedList;
@@ -39,7 +40,7 @@ public class Game {
 
     private ICrossover crossoverMethod;
 
-    private IMutation mutation;
+    private Mutation mutation;
 
     private BaseCutCriteria cutCriteria;
 

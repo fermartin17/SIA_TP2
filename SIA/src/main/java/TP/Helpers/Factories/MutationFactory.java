@@ -7,7 +7,7 @@ import TP.Models.Genetics.Mutations.*;
 
 public class MutationFactory {
 
-    public static IMutation giveMutation(MutationConfiguration mutation){
+    public static Mutation giveMutation(MutationConfiguration mutation){
         switch (mutation.getName().toLowerCase()){
             case Constants.Mutation.CompleteMultiGenMutation:
                 return new CompleteMultiGenMutation(mutation.getProbability());
