@@ -20,25 +20,29 @@
       "name":"",
       "probability":0.0
    },
-   "mutationProbability":0.0,
    "acceptableSolutionCriteria":{
-      "acceptableFitness":0.0
+      "acceptableFitness":0.0,
+      "inUse":false
    },
    "contentCriteria":{
       "maxHits":0,
       "precision":0.0,
-      "currentHits":0
+      "currentHits":0,
+      "inUse":false
    },
    "numberOfGenerationsCriteria":{
-      "maxCount":0
+      "maxCount":0,
+      "inUse":false
    },
    "structureCriteria":{
       "percentage":0.0,
-      "generationsWindow":0
+      "generationsWindow":0,
+      "inUse":false
    },
    "timeCriteria":{
       "startTime":0.0,
-      "maxTime":0.0
+      "maxTime":0.0,
+      "inUse":false
    },
    "height":0.0,
    "individualClass":""
