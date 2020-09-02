@@ -3,6 +3,7 @@ package TP.Models;
 import TP.Interfaces.IMutation;
 import TP.Models.Equipment;
 import TP.Models.Genetics.Chromosome;
+import TP.Models.Genetics.Mutations.Mutation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public abstract class BasePlayer {
     private Chromosome chromosome;
     private double atm;
     private double dem;
-    private double height;
+    private int height;
     private double attack;
     private double defense;
     private double performance;
@@ -27,8 +28,7 @@ public abstract class BasePlayer {
     private double pericia;
     private double health;
     private double resistance;
-    private double mutationProbability = 0.5;
-    private IMutation mutation;
+    private Mutation mutation;
 
     public abstract Double calculatePerformance();
 
@@ -90,7 +90,7 @@ public abstract class BasePlayer {
 
     public void mutate(){
         double rand = ThreadLocalRandom.current().nextDouble(0, 1);
-        if(rand > mutationProbability){
+        if(rand > this.mutation.getMutationProbability()){
             this.chromosome = mutation.mutate(this.chromosome);
         }
         //change stats based on mutatation
