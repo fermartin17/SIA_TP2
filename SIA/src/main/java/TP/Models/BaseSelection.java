@@ -9,5 +9,5 @@ import lombok.Setter;
 @Getter
 public abstract class BaseSelection{
 
-    private double probability;
+    private double percentage;
 }

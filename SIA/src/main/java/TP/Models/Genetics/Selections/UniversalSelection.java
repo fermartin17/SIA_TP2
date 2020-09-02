@@ -6,8 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class UniversalSelection extends RouletteSelection {
 
-    public  UniversalSelection (double probability){
-        super(probability);
+    public  UniversalSelection (double percentage){
+        super(percentage);
     }
     @Override
     public List<Double> generateRandoms() {

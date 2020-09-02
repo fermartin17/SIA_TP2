@@ -14,8 +14,8 @@ public class DeterministicTournament extends BaseSelection implements ISelection
     private static int M = 10;
     private static int K = 100;
 
-    public DeterministicTournament(double probability){
-        this.setProbability(probability);
+    public DeterministicTournament(double percentage){
+        this.setPercentage(percentage);
     }
 
     @Override

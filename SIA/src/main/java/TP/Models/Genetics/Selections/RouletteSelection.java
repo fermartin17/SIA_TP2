@@ -14,8 +14,8 @@ public class RouletteSelection extends BaseSelection implements ISelection {
 
     public static int K = 100; //TODO: agarrar del archivo de configuración
 
-    public RouletteSelection(double probability){
-        setProbability(probability);
+    public RouletteSelection(double percentage){
+        setPercentage(percentage);
     }
 
     @Override

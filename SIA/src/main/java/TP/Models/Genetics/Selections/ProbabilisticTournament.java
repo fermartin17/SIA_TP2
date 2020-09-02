@@ -14,8 +14,8 @@ public class ProbabilisticTournament extends BaseSelection implements ISelection
     private static int K = 100;
     private static double threshold = 0.75;
 
-    public ProbabilisticTournament(double probability){
-        setProbability(probability);
+    public ProbabilisticTournament(double percentage){
+        setPercentage(percentage);
     }
 
     @Override

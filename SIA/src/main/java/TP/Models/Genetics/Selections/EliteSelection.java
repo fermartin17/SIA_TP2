@@ -14,8 +14,8 @@ public class EliteSelection extends BaseSelection implements ISelection {
 
     private static int K = 100; //TODO: agarrar del archivo de configuración
 
-    public EliteSelection(double probability){
-        setProbability(probability);
+    public EliteSelection(double percentage){
+        setPercentage(percentage);
     }
 
     @Override
