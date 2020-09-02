@@ -13,7 +13,7 @@ import TP.Models.Genetics.Selections.*;
 public class SelectionMethodFactory {
 
     public static ISelection giveSelection(SelectionMethod method) {
-        switch (method.getName()) {
+        switch (method.getName().toLowerCase()) {
             case Constants.Selection.DeterministicTournament:
                 return new DeterministicTournament(method.getPercentage());
             case Constants.Selection.EliteSelection:

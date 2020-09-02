@@ -29,9 +29,9 @@ public class App {
         Gson gson = new Gson();
         ConfigurationFile conf = gson.fromJson(bufferedReader, ConfigurationFile.class);
 
-//        Game game = new Game(conf);
+       Game game = new Game(conf);
 
-        System.out.println(gson.toJson(new ConfigurationFile()));
+//        System.out.println(gson.toJson(new ConfigurationFile()));
 
 
 

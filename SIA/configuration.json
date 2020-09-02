@@ -1,24 +1,24 @@
 {
    "fatherMethod_1":{
-      "percentage":0.0,
-      "name":""
+      "percentage":0.7,
+      "name":"EliteSelection"
    },
    "fatherMethod_2":{
-      "percentage":0.0,
-      "name":""
+      "percentage":0.3,
+      "name":"EliteSelection"
    },
    "individualMethod_1":{
-      "percentage":0.0,
-      "name":""
+      "percentage":1.0,
+      "name":"EliteSelection"
    },
    "individualMethod_2":{
       "percentage":0.0,
-      "name":""
+      "name":"EliteSelection"
    },
-   "crossoverMethod":"",
+   "crossoverMethod":"AnularCrossOver",
    "mutation":{
-      "name":"",
-      "probability":0.0
+      "name":"GenMutation",
+      "probability":0.7
    },
    "acceptableSolutionCriteria":{
       "acceptableFitness":0.0,
@@ -41,9 +41,9 @@
    },
    "timeCriteria":{
       "startTime":0.0,
-      "maxTime":0.0,
-      "inUse":false
+      "maxTime":10.0,
+      "inUse":true
    },
    "height":0.0,
-   "individualClass":""
+   "individualClass":"Warrior"
 }

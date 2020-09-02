@@ -11,31 +11,31 @@ public class Constants {
     }
 
     public static class Selection {
-        public static final String DeterministicTournament = "DeterministicTournament";
-        public static final String EliteSelection = "EliteSelection";
-        public static final String ProbabilisticTournament = "ProbabilisticTournament";
-        public static final String RouletteSelection = "RouletteSelection";
-        public static final String UniversalSelection = "UniversalSelection";
+        public static final String DeterministicTournament = "deterministictournament";
+        public static final String EliteSelection = "eliteselection";
+        public static final String ProbabilisticTournament = "probabilistictournament";
+        public static final String RouletteSelection = "rouletteselection";
+        public static final String UniversalSelection = "universalselection";
     }
 
     public static class Crossover {
-        public static final String AnularCrossOver = "AnularCrossOver";
-        public static final String OnePointCrossOver = "OnePointCrossOver";
-        public static final String TwoPointsCrossOver = "TwoPointsCrossOver";
-        public static final String UniformCrossOver = "UniformCrossOver";
+        public static final String AnularCrossOver = "anularcrossover";
+        public static final String OnePointCrossOver = "onepointcrossover";
+        public static final String TwoPointsCrossOver = "twopointscrossover";
+        public static final String UniformCrossOver = "uniformcrossover";
     }
 
     public static class Mutation {
-        public static final String CompleteMultiGenMutation = "CompleteMultiGenMutation";
-        public static final String GenMutation = "GenMutation";
-        public static final String LimitedMultiGenMutation = "LimitedMultiGenMutation";
-        public static final String UniformMultiGenMutation = "UniformMultiGenMutation";
+        public static final String CompleteMultiGenMutation = "completemultigenmutation";
+        public static final String GenMutation = "genmutation";
+        public static final String LimitedMultiGenMutation = "limitedmultigenmutation";
+        public static final String UniformMultiGenMutation = "uniformmultigenmutation";
     }
 
     public static class Type {
-        public static final String Archer = "Archer";
-        public static final String Warrior = "Warrior";
-        public static final String Defender = "Defender";
-        public static final String Infiltrate = "Infiltrate";
+        public static final String Archer = "archer";
+        public static final String Warrior = "warrior";
+        public static final String Defender = "defender";
+        public static final String Infiltrate = "infiltrate";
     }
 }

@@ -11,7 +11,7 @@ import TP.Models.Genetics.Crossovers.UniformCrossOver;
 public class ClassesFactory {
 
     public static BasePlayer givePlayer(String player, double height) {
-        switch (player) {
+        switch (player.toLowerCase()) {
             case Constants.Type.Warrior:
                 return new Warrior(height);
             case Constants.Type.Archer:

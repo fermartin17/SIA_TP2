@@ -8,7 +8,7 @@ import TP.Models.Genetics.Mutations.*;
 public class MutationFactory {
 
     public static IMutation giveMutation(MutationConfiguration mutation){
-        switch (mutation.getName()){
+        switch (mutation.getName().toLowerCase()){
             case Constants.Mutation.CompleteMultiGenMutation:
                 return new CompleteMultiGenMutation(mutation.getProbability());
             case Constants.Mutation.GenMutation:
