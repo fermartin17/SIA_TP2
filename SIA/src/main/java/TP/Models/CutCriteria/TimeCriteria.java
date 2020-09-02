@@ -6,7 +6,9 @@ import TP.Models.Generation;
 public class TimeCriteria implements ICutCriteria {
 
     private double startTime;
-    private final double maxTime;
+    private double maxTime;
+
+    public TimeCriteria(){}
 
     public TimeCriteria(double maxTime){
         this.startTime = -1;

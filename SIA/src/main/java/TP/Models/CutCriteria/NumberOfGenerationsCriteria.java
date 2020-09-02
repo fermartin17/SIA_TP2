@@ -5,7 +5,9 @@ import TP.Models.Generation;
 
 public class NumberOfGenerationsCriteria implements ICutCriteria {
 
-    private final int maxCount;
+    private int maxCount;
+
+    public NumberOfGenerationsCriteria(){}
 
     public NumberOfGenerationsCriteria(int maxCount){
         this.maxCount = maxCount;

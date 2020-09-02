@@ -5,9 +5,11 @@ import TP.Models.Generation;
 
 public class ContentCriteria implements ICutCriteria {
 
-    private final int maxHits;
-    private final double precision;
+    private int maxHits;
+    private double precision;
     private int currentHits;
+
+    public ContentCriteria(){}
 
     public ContentCriteria(int maxHits, double precision){
         this.maxHits = maxHits;

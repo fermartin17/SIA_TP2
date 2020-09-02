@@ -5,7 +5,9 @@ import TP.Models.Generation;
 
 public class AcceptableSolutionCriteria implements ICutCriteria {
 
-    public final double acceptableFitness;
+    public double acceptableFitness;
+
+    public AcceptableSolutionCriteria(){}
 
     public AcceptableSolutionCriteria(double acceptableFitness){
         this.acceptableFitness = acceptableFitness;

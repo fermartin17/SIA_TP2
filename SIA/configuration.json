@@ -1,0 +1,43 @@
+{
+   "fatherMethod_1":{
+      "percentage":0.7,
+      "name":"sarasa"
+   },
+   "fatherMethod_2":{
+      "percentage":0.3,
+      "name":"feo"
+   },
+   "individualMethod_1":{
+      "percentage":0.0,
+      "name":""
+   },
+   "individualMethod_2":{
+      "percentage":0.0,
+      "name":""
+   },
+   "crossoverMethod":"",
+   "mutation":{
+      
+   },
+   "acceptableSolutionCriteria":{
+      "acceptableFitness":14
+   },
+   "contentCriteria":{
+      "maxHits":0,
+      "precision":0.0,
+      "currentHits":0
+   },
+   "numberOfGenerationsCriteria":{
+      "maxCount":0
+   },
+   "structureCriteria":{
+      "percentage":0.0,
+      "generationsWindow":0
+   },
+   "timeCriteria":{
+      "startTime":7.0,
+      "maxTime":85.0
+   },
+   "height":2.0,
+   "individualClass":"Warrior"
+}

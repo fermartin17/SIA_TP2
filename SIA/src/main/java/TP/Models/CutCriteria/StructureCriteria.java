@@ -10,8 +10,10 @@ import java.util.List;
 public class StructureCriteria implements ICutCriteria {
 
     private List<Generation> generations;
-    private final double percentage;
-    private final int generationsWindow;
+    private double percentage;
+    private int generationsWindow;
+
+    public StructureCriteria(){}
 
     public StructureCriteria(double percentage, int generationWindow){
         this.generations = new LinkedList<>();
