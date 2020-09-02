@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class Infiltrate extends BasePlayer {
 
-    public Infiltrate(){
-        super();
+    public Infiltrate(double height){
+        setHeight(height);
     }
     @Override
     public Double calculatePerformance() {

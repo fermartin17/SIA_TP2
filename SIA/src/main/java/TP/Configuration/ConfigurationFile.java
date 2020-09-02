@@ -18,6 +18,7 @@ public class ConfigurationFile {
     private String crossoverMethod;
 
     private MutationConfiguration mutation;
+    private double mutationProbability;
 
     private AcceptableSolutionCriteria acceptableSolutionCriteria;
     private ContentCriteria contentCriteria;

@@ -2,6 +2,7 @@ package TP.Models.Genetics.Selections;
 
 import TP.Interfaces.ISelection;
 import TP.Models.BasePlayer;
+import TP.Models.BaseSelection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +10,13 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class RouletteSelection implements ISelection {
+public class RouletteSelection extends BaseSelection implements ISelection {
 
     public static int K = 100; //TODO: agarrar del archivo de configuración
+
+    public RouletteSelection(double probability){
+        setProbability(probability);
+    }
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {

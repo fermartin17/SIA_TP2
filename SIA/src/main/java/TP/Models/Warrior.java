@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class Warrior extends BasePlayer {
 
-    public Warrior(){
-        super();
+    public Warrior(double height){
+        setHeight(height);
     }
     @Override
     public Double calculatePerformance() {

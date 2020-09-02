@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class Defender extends BasePlayer {
 
-    public Defender(){
-        super();
+    public Defender(double height){
+        setHeight(height);
     }
     @Override
     public Double calculatePerformance() {

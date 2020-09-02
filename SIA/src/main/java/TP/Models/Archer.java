@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class Archer extends BasePlayer {
 
-    public Archer(){
-        super();
+    public Archer(double height){
+        setHeight(height);
     }
     @Override
     public Double calculatePerformance() {

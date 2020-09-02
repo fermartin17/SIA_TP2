@@ -6,6 +6,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class UniversalSelection extends RouletteSelection {
 
+    public  UniversalSelection (double probability){
+        super(probability);
+    }
     @Override
     public List<Double> generateRandoms() {
         List<Double> ret = new ArrayList<>(K);

@@ -25,7 +25,9 @@ public class App {
         Gson gson = new Gson();
 
         Object json = gson.fromJson(bufferedReader, ConfigurationFile.class);
-        
+
+
+        System.out.println(gson.toJson(new ConfigurationFile()));
 
     }
 }
