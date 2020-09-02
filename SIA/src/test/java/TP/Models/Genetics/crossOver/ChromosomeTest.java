@@ -1,5 +1,6 @@
-package TP.Models.Genetics;
+package TP.Models.Genetics.crossOver;
 
+import TP.Models.Genetics.Chromosome;
 import org.junit.Assert;
 import org.junit.Test;
 
