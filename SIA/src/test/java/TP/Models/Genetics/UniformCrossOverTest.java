@@ -1,11 +1,10 @@
 package TP.Models.Genetics;
 
 import TP.Interfaces.ICrossover;
+import TP.Models.Genetics.Crossovers.UniformCrossOver;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 public class UniformCrossOverTest {
 

@@ -5,10 +5,10 @@ import TP.Models.Genetics.Chromosome;
 public interface IMutation {
 
     /**
-     * Método que se aplica sobre un cromosoma para
+     * Método que se aplica una mutación sobre un cromosoma
      * @param c cromosoma a mutar
-     * @return void
+     * @return nuevo cromosoma mutado
      */
-    public void mutate(Chromosome c);
+    public Chromosome mutate(Chromosome c);
 
 }
