@@ -5,6 +5,7 @@ import TP.Interfaces.IFillMethod;
 import TP.Models.Genetics.Selections.CombinedSelection;
 import TP.Models.Genetics.Selections.Selection;
 import TP.Models.Player.BasePlayer;
+import TP.Services.RedisService;
 
 import java.util.List;
 
@@ -19,11 +20,11 @@ public class FillParent implements IFillMethod {
     @Override
     public List<BasePlayer> fill(List<BasePlayer> parents,
                                        CombinedSelection parentSel,
-                                       CombinedSelection replaceSel) {
+                                       CombinedSelection replaceSel, RedisService service) {
         //elegir K padres a cruzar
         List<BasePlayer> selectedParents = parentSel.makeSelection(parents);
         //cruzar a los padres elegidos
-        List<BasePlayer> offspring = Generation.breed(parents, crossover);
+        List<BasePlayer> offspring = Generation.breed(parents, crossover,service);
         //la diferencia entre la cantidad de hijos y la generación actual
         int generationDifference = parents.size() - offspring.size();
         //si K >= N, devolvemos N hijos
