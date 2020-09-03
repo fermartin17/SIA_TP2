@@ -51,7 +51,7 @@ public class RouletteSelection extends Selection {
         boolean found;
         for (double r : randoms) {
             found = false;
-            //noinspection UnclearExpression
+            //noinspection UnclearExpression,ConstantConditions
             for (int j = 0; !found && j < accumulated.size() - 1; j++) {
                 if (accumulated.get(j) < r && r <= accumulated.get(j + 1)) {
                     ret.add(population.get(j + 1));
