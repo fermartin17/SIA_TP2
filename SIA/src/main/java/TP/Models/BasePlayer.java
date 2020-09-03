@@ -28,7 +28,6 @@ public abstract class BasePlayer {
     private double pericia;
     private double health;
     private double resistance;
-    private Mutation mutation;
 
     public abstract Double calculatePerformance();
 
@@ -88,11 +87,4 @@ public abstract class BasePlayer {
         this.dem = 1.9 + Math.pow((2.5 * this.height - 4.16), 4) + Math.pow((2.5 * this.height - 4.16), 2) + (3 * this.height) / 10;
     }
 
-    public void mutate(){
-        double rand = ThreadLocalRandom.current().nextDouble(0, 1);
-        if(rand > this.mutation.getMutationProbability()){
-            this.chromosome = mutation.mutate(this.chromosome);
-        }
-        //change stats based on mutatation
-    }
 }

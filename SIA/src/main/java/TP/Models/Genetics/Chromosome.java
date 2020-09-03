@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.util.Arrays;
 
 @Getter
+
 public class Chromosome {
 
     private Integer[] chromosome;
