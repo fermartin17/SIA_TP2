@@ -1,15 +1,13 @@
 package TP.Models.Genetics.Selections;
 
-import TP.Interfaces.ISelection;
 import TP.Models.BasePlayer;
-import TP.Models.BaseSelection;
+import TP.Models.Selection;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ProbabilisticTournament extends BaseSelection implements ISelection {
+public class ProbabilisticTournament extends Selection {
 
     private static int K = 100;
     private static double threshold = 0.75;

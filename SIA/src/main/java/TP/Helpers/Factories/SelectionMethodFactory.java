@@ -2,17 +2,12 @@ package TP.Helpers.Factories;
 
 import TP.Configuration.SelectionMethod;
 import TP.Constants.Constants;
-import TP.Interfaces.ICrossover;
-import TP.Interfaces.ISelection;
-import TP.Models.Genetics.Crossovers.AnularCrossOver;
-import TP.Models.Genetics.Crossovers.OnePointCrossOver;
-import TP.Models.Genetics.Crossovers.TwoPointsCrossOver;
-import TP.Models.Genetics.Crossovers.UniformCrossOver;
+import TP.Models.Selection;
 import TP.Models.Genetics.Selections.*;
 
 public class SelectionMethodFactory {
 
-    public static ISelection giveSelection(SelectionMethod method) {
+    public static Selection giveSelection(SelectionMethod method) {
         switch (method.getName().toLowerCase()) {
             case Constants.Selection.DeterministicTournament:
                 return new DeterministicTournament(method.getPercentage());
