@@ -1,14 +1,12 @@
 package TP.Models.CutCriteria;
 
-import TP.Interfaces.ICutCriteria;
-import TP.Models.BaseCutCriteria;
 import TP.Models.Generation;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AcceptableSolutionCriteria extends BaseCutCriteria implements ICutCriteria {
+public class AcceptableSolutionCriteria extends BaseCutCriteria{
 
     public double acceptableFitness;
 
@@ -20,6 +18,6 @@ public class AcceptableSolutionCriteria extends BaseCutCriteria implements ICutC
 
     @Override
     public boolean cutProgram(Generation g) {
-        return g.getBestFitness() >= acceptableFitness;
+        return g.getBestFitness().getPerformance() >= acceptableFitness;
     }
 }

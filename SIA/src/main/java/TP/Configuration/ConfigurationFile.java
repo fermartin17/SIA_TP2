@@ -24,6 +24,7 @@ public class ConfigurationFile {
     private TimeCriteria timeCriteria;
 
     private int poblation;
+    private int generationNumber;
     private String individualClass;
 
     public ConfigurationFile(){

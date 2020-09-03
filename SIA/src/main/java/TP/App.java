@@ -19,7 +19,9 @@ public class App {
 
        Game game = new Game(conf);
 
-//        System.out.println(gson.toJson(new ConfigurationFile()));
+       game.run();
+
+//       System.out.println(gson.toJson(new ConfigurationFile()));
 
 
 

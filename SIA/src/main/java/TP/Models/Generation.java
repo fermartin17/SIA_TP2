@@ -16,14 +16,22 @@ import java.util.*;
 public class Generation {
 
     private List<BasePlayer> currentPopulation;
-    private double bestFitness;
-    private double currentFitness;
+    private BasePlayer bestFitness;
     private int generationNumber;
+    public double lastGenerationPerformance;
 
     public Generation(){
         this.currentPopulation = new LinkedList<>();
-        this.bestFitness = this.currentFitness = 0;
+        this.bestFitness = null;
         this.generationNumber = 0;
+        this.lastGenerationPerformance = 0;
+    }
+
+    public Generation(List<BasePlayer> currentPopulation){
+        this.currentPopulation = currentPopulation;
+        this.bestFitness = null;
+        this.generationNumber = 0;
+        this.lastGenerationPerformance = 0;
     }
 
     public static List<BasePlayer> breed(List<BasePlayer> selectedParents, ICrossover crossover){
@@ -56,5 +64,18 @@ public class Generation {
             if(child2 != null) offspring.add(child2);
         }
         return offspring;
+    }
+
+    public void nextGeneration(List<BasePlayer> newPopulation){
+        compareBestFitness(newPopulation);
+        this.currentPopulation = new ArrayList<>(newPopulation);
+        this.generationNumber++;
+    }
+
+    private void compareBestFitness(List<BasePlayer>  newPopulation){
+        BasePlayer aux = newPopulation.stream().max(Comparator.comparing(BasePlayer::getPerformance)).get();
+        System.out.println(aux.getPerformance());
+        this.lastGenerationPerformance = aux.getPerformance();
+        this.bestFitness = this.bestFitness.comparePerformance(aux);
     }
 }

@@ -7,7 +7,9 @@ import TP.Helpers.Factories.CrossoverFactory;
 import TP.Helpers.Factories.MutationFactory;
 import TP.Helpers.Factories.SelectionMethodFactory;
 import TP.Interfaces.*;
-import TP.Models.BaseCutCriteria;
+import TP.Models.CutCriteria.BaseCutCriteria;
+import TP.Models.FillAll;
+import TP.Models.Generation;
 import TP.Models.Genetics.Chromosome;
 import TP.Models.Genetics.Selections.CombinedSelection;
 import TP.Models.Player.BasePlayer;
@@ -36,7 +38,7 @@ public class Game {
     private CombinedSelection parentsSelection;
     private CombinedSelection replacementSelection;
 
-    private ICrossover crossoverMethod;
+    private IFillMethod fillMethod;
 
     private Mutation mutation;
 
@@ -48,7 +50,7 @@ public class Game {
 
     private List<BasePlayer> poblation;
 
-    private List<BasePlayer> currentGeneration;
+    private int generationNumber;
 
     public Game(ConfigurationFile conf) {
 
@@ -56,15 +58,15 @@ public class Game {
         service = new RedisService();
         prepareEquipment();
         this.poblationNumber = conf.getPoblation();
-        Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), poblationNumber);
-        Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), poblationNumber);
+        Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), this.generationNumber);
+        Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), this.poblationNumber);
         this.parentsSelection = new CombinedSelection(fatherMethod1, fatherMethod2);
 
-        Selection replacementMethod1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), poblationNumber);
-        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), poblationNumber);
+        Selection replacementMethod1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), this.generationNumber);
+        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), this.poblationNumber);
         this.replacementSelection = new CombinedSelection(replacementMethod1, replacementMethod2);
 
-        this.crossoverMethod = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
+        this.fillMethod = new FillAll(CrossoverFactory.giveCrossover(conf.getCrossoverMethod()));
         this.mutation = MutationFactory.giveMutation(conf.getMutation());
 
         this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
@@ -78,6 +80,7 @@ public class Game {
         criterias.add(conf.getStructureCriteria());
 
         this.cutCriteria = prepareCutCriteria(criterias);
+        this.generationNumber = conf.getGenerationNumber();
     }
 
     private void prepareEquipment() {
@@ -99,14 +102,14 @@ public class Game {
         }
     }
 
-    private void generateRandomPopulation(){
+    private void generateRandomPopulation() {
         List<BasePlayer> randomPopulation = new LinkedList<>();
         int i = 0;
         BasePlayer playerAux;
         Random rand = new Random();
         int floorHeight = 130;
 
-        while(i < this.poblationNumber){
+        while (i < this.poblationNumber) {
             playerAux = ClassesFactory.givePlayer(player.getName());
             playerAux.getEquipment().add(fronts.get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(helmets.get(rand.nextInt(1000000)));
@@ -117,7 +120,16 @@ public class Game {
             randomPopulation.add(playerAux);
             i++;
         }
-        this.poblation= randomPopulation;
+        this.poblation = randomPopulation;
+    }
+
+    public void run() {
+
+        generateRandomPopulation();
+        Generation generation = new Generation(this.poblation);
+        while (!this.cutCriteria.cutProgram(generation)) {
+            generation.nextGeneration(this.fillMethod.fill(generation.getCurrentPopulation(), this.parentsSelection, this.replacementSelection));
+        }
     }
 
 }
