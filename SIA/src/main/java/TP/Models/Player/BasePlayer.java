@@ -110,4 +110,7 @@ public abstract class BasePlayer {
         this.dem = 1.9 + Math.pow((2.5 * this.height - 4.16), 4) + Math.pow((2.5 * this.height - 4.16), 2) + (3 * (float)this.height) / 10;
     }
 
+    public BasePlayer comparePerformance(BasePlayer player){
+        return this.getPerformance() >= player.getPerformance() ? this : player;
+    }
 }

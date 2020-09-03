@@ -1,5 +1,6 @@
 package TP.Models;
 
+import TP.Constants.Constants;
 import TP.Interfaces.ICrossover;
 import TP.Models.Genetics.Chromosome;
 import TP.Models.Player.BasePlayer;
@@ -18,15 +19,23 @@ import java.util.List;
 public class Generation {
 
     private List<BasePlayer> currentPopulation;
-    private double bestHistoricFitness;
     private double bestFitness;
     private double currentFitness;
     private int generationNumber;
+    public double lastGenerationPerformance;
 
     public Generation(){
         this.currentPopulation = new LinkedList<>();
-        this.bestHistoricFitness = this.bestFitness = this.currentFitness = 0;
+        this.bestFitness = this.currentFitness = 0;
         this.generationNumber = 0;
+        this.lastGenerationPerformance = 0;
+    }
+
+    public Generation(List<BasePlayer> currentPopulation){
+        this.currentPopulation = currentPopulation;
+        this.bestFitness = null;
+        this.generationNumber = 0;
+        this.lastGenerationPerformance = 0;
     }
 
     public static List<BasePlayer> breed(List<BasePlayer> selectedParents, ICrossover crossover){
@@ -62,9 +71,15 @@ public class Generation {
     }
 
     public void nextGeneration(List<BasePlayer> newPopulation){
+        compareBestFitness(newPopulation);
         this.currentPopulation = new ArrayList<>(newPopulation);
         this.generationNumber++;
-        this.currentFitness = 0;
-        this.bestFitness = 0;
+    }
+
+    private void compareBestFitness(List<BasePlayer>  newPopulation){
+        BasePlayer aux = newPopulation.stream().max(Comparator.comparing(BasePlayer::getPerformance)).get();
+        System.out.println(aux.getPerformance());
+        this.lastGenerationPerformance = aux.getPerformance();
+        this.bestFitness = this.bestFitness.comparePerformance(aux);
     }
 }
