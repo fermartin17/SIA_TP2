@@ -1,6 +1,5 @@
 package TP.Models;
 
-import TP.Constants.Constants;
 import TP.Interfaces.ICrossover;
 import TP.Models.Genetics.Chromosome;
 import TP.Models.Player.BasePlayer;
@@ -10,6 +9,9 @@ import lombok.Setter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -57,5 +59,12 @@ public class Generation {
             if(child2 != null) offspring.add(child2);
         }
         return offspring;
+    }
+
+    public void nextGeneration(List<BasePlayer> newPopulation){
+        this.currentPopulation = new ArrayList<>(newPopulation);
+        this.generationNumber++;
+        this.currentFitness = 0;
+        this.bestFitness = 0;
     }
 }
