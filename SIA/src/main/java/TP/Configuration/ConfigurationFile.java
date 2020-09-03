@@ -1,8 +1,6 @@
 package TP.Configuration;
 
-import TP.Models.BasePlayer;
 import TP.Models.CutCriteria.*;
-import TP.Models.Genetics.Mutations.Mutation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,7 +37,7 @@ public class ConfigurationFile {
         this.numberOfGenerationsCriteria = new NumberOfGenerationsCriteria();
         this.structureCriteria = new StructureCriteria();
         this.timeCriteria = new TimeCriteria();
-        this.individualClass = new String();
-        this.crossoverMethod = new String();
+        this.individualClass = "";
+        this.crossoverMethod = "";
     }
 }

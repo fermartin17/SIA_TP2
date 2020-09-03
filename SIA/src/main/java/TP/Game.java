@@ -8,9 +8,9 @@ import TP.Helpers.Factories.MutationFactory;
 import TP.Helpers.Factories.SelectionMethodFactory;
 import TP.Interfaces.*;
 import TP.Models.BaseCutCriteria;
-import TP.Models.BasePlayer;
 import TP.Models.Genetics.Chromosome;
-import TP.Models.Selection;
+import TP.Models.Player.BasePlayer;
+import TP.Models.Genetics.Selections.Selection;
 import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
@@ -56,18 +56,18 @@ public class Game {
         this.conf = conf;
         service = new RedisService();
         prepareEquipment();
-
-        this.fatherMethod_1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1());
-        this.fatherMethod_2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2());
-        this.individualMethod_1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1());
-        this.individualMethod_2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2());
+        this.poblationNumber = conf.getPoblation();
+        this.fatherMethod_1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), poblationNumber);
+        this.fatherMethod_2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), poblationNumber);
+        this.individualMethod_1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), poblationNumber);
+        this.individualMethod_2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), poblationNumber);
 
         this.crossoverMethod = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
         this.mutation = MutationFactory.giveMutation(conf.getMutation());
 
         this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
 
-        List<BaseCutCriteria> criterias = new LinkedList<BaseCutCriteria>();
+        List<BaseCutCriteria> criterias = new LinkedList<>();
 
         criterias.add(conf.getAcceptableSolutionCriteria());
         criterias.add(conf.getContentCriteria());
@@ -76,7 +76,6 @@ public class Game {
         criterias.add(conf.getStructureCriteria());
 
         this.cutCriteria = prepareCutCriteria(criterias);
-        this.poblationNumber = conf.getPoblation();
     }
 
     private void prepareEquipment() {
@@ -88,7 +87,7 @@ public class Game {
     }
 
     private BaseCutCriteria prepareCutCriteria(List<BaseCutCriteria> criterias) {
-        return criterias.stream().filter(x -> x.isInUse()).findFirst().orElse(null);
+        return criterias.stream().filter(BaseCutCriteria::isInUse).findFirst().orElse(null);
     }
 
     private void mutate(Chromosome chromosome) {
@@ -99,7 +98,7 @@ public class Game {
     }
 
     private void generateRandomPoblation(){
-        List<BasePlayer> randomPoblation = new LinkedList<BasePlayer>();
+        List<BasePlayer> randomPoblation = new LinkedList<>();
         int i = 0;
         BasePlayer playerAux;
         Random rand = new Random();

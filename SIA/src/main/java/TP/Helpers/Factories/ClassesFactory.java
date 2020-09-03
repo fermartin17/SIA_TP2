@@ -1,12 +1,7 @@
 package TP.Helpers.Factories;
 
 import TP.Constants.Constants;
-import TP.Interfaces.ICrossover;
-import TP.Models.*;
-import TP.Models.Genetics.Crossovers.AnularCrossOver;
-import TP.Models.Genetics.Crossovers.OnePointCrossOver;
-import TP.Models.Genetics.Crossovers.TwoPointsCrossOver;
-import TP.Models.Genetics.Crossovers.UniformCrossOver;
+import TP.Models.Player.*;
 
 public class ClassesFactory {
 

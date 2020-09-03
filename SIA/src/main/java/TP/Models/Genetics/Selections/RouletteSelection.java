@@ -1,7 +1,6 @@
 package TP.Models.Genetics.Selections;
 
-import TP.Models.BasePlayer;
-import TP.Models.Selection;
+import TP.Models.Player.BasePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +10,8 @@ import java.util.stream.IntStream;
 
 public class RouletteSelection extends Selection {
 
-    public static int K = 100; //TODO: agarrar del archivo de configuración
-
-    public RouletteSelection(double percentage){
-        setPercentage(percentage);
+    public RouletteSelection(int K, double percentage){
+        super(K, percentage);
     }
 
     @Override
@@ -31,20 +28,20 @@ public class RouletteSelection extends Selection {
         return  population
                 .stream()
                 .map(p -> p.calculatePerformance() / totalSum)
-                .collect(Collectors.toCollection(() -> new ArrayList<>(K)));
+                .collect(Collectors.toCollection(() -> new ArrayList<>(this.getK())));
     }
 
     //calcular las aptitudes relativas acumuladas
     private List<Double> calculateAccumulatedList(List<Double> relatives){
-        List<Double> acum = new ArrayList<>(K);
+        List<Double> acum = new ArrayList<>(this.getK());
         acum.add(relatives.get(0));
-        IntStream.range(1, K).forEach(i -> acum.add(acum.get(i - 1) + acum.get(i)));
+        IntStream.range(1, this.getK()).forEach(i -> acum.add(acum.get(i - 1) + acum.get(i)));
         return acum;
     }
 
     public List<Double> generateRandoms(){
-        List<Double> ret = new ArrayList<>(K);
-        for(int i = 0; i < K; i++) ret.add(ThreadLocalRandom.current().nextDouble());
+        List<Double> ret = new ArrayList<>(this.getK());
+        for(int i = 0; i < this.getK(); i++) ret.add(ThreadLocalRandom.current().nextDouble());
         return ret;
     }
 
@@ -54,9 +51,11 @@ public class RouletteSelection extends Selection {
         boolean found;
         for (double r : randoms) {
             found = false;
+            //noinspection UnclearExpression
             for (int j = 0; !found && j < accumulated.size() - 1; j++) {
                 if (accumulated.get(j) < r && r <= accumulated.get(j + 1)) {
                     ret.add(population.get(j + 1));
+                    //noinspection UnusedAssignment
                     found = true;
                     break;
                 }

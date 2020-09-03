@@ -1,7 +1,6 @@
 package TP.Models.Genetics.Selections;
 
-import TP.Models.BasePlayer;
-import TP.Models.Selection;
+import TP.Models.Player.BasePlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,20 +8,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ProbabilisticTournament extends Selection {
 
-    private static int K = 100;
-    private static double threshold = 0.75;
+    private static double threshold = 0.75; //TODO: ver esto
 
-    public ProbabilisticTournament(double percentage){
-        setPercentage(percentage);
+    public ProbabilisticTournament(int K, double percentage){
+        super(K, percentage);
     }
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
         //lista a retornar
-        List<BasePlayer> ret = new ArrayList<>(K);
+        List<BasePlayer> ret = new ArrayList<>(this.getK());
         //lista auxiliar de M individuos de la población
         BasePlayer[] aux = new BasePlayer[2];
-        for(int i = 0; i < K; i++) {
+        for(int i = 0; i < this.getK(); i++) {
             //elegir 2 individuos aleatorios
             aux[0] = population.get(ThreadLocalRandom.current().nextInt(0, population.size()));
             aux[1] = population.get(ThreadLocalRandom.current().nextInt(0, population.size()));

@@ -1,6 +1,6 @@
-package TP.Models;
+package TP.Models.Genetics.Selections;
 
-import TP.Interfaces.IService;
+import TP.Models.Player.BasePlayer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +11,10 @@ import java.util.List;
 public abstract class Selection {
 
     private double percentage;
+    private int K;
 
-    public Selection(double percentage){
+    public Selection(int K, double percentage){
+        this.K = K;
         this.percentage = percentage;
     }
 

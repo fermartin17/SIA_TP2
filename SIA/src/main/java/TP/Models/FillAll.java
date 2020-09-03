@@ -1,25 +1,29 @@
 package TP.Models;
 
+import TP.Interfaces.ICrossover;
 import TP.Interfaces.IFillMethod;
+import TP.Models.Genetics.Selections.Selection;
+import TP.Models.Player.BasePlayer;
 
-import java.util.Collections;
 import java.util.List;
 
 public class FillAll implements IFillMethod {
 
-    private int size;
+    private ICrossover crossover;
 
-    public FillAll(int size){
-        this.size = size;
+    public FillAll(ICrossover crossover){
+        this.crossover = crossover;
     }
 
     @Override
-    public List<BasePlayer> fillParent(List<BasePlayer> parents, List<BasePlayer> offspring,
-                                       Selection parentSel, Selection offspringSel) {
+    public List<BasePlayer> fillParent(List<BasePlayer> parents, Selection parentSel, Selection offspringSel) {
+        //elegir K padres
+        List<BasePlayer> selectedParents = parentSel.makeSelection(parents);
+        //cruzar a los padres elegidos
+        List<BasePlayer> offspring = Generation.breed(parents, crossover);
         //añadir todos a la misma bolsa
-        parents.addAll(offspring);
-        Collections.shuffle(parents);
-        //elegir con métodos 3 y 4
-        return parents;
+        selectedParents.addAll(offspring);
+        //hacer selección con métodos 3 y 4
+        return offspringSel.makeSelection(selectedParents);
     }
 }

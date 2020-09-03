@@ -1,5 +1,6 @@
-package TP.Models;
+package TP.Models.Player;
 
+import TP.Constants.Constants;
 import TP.Interfaces.IMutation;
 import TP.Models.Equipment;
 import TP.Models.Genetics.Chromosome;
@@ -7,6 +8,7 @@ import TP.Models.Genetics.Mutations.Mutation;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -28,6 +30,27 @@ public abstract class BasePlayer {
     private double pericia;
     private double health;
     private double resistance;
+
+    //constructor default
+    public BasePlayer(){
+        this.name = "";
+        this.equipment = new ArrayList<>(Chromosome.S -1);
+        this.chromosome = new Chromosome();
+        this.atm = dem = height = 0;
+        this.attack = defense = performance = 0;
+        this.strength = this.agility = this.pericia = 0;
+        this.health = this.resistance = 0;
+    }
+
+    public BasePlayer(Chromosome c){
+        this.height = chromosome.getChromosome()[0];
+        this.equipment.add(new Equipment(Constants.Equipment.weapons,chromosome.getChromosome()[1]));
+        this.equipment.add(new Equipment(Constants.Equipment.boots,chromosome.getChromosome()[2]));
+        this.equipment.add(new Equipment(Constants.Equipment.helmet,chromosome.getChromosome()[3]));
+        this.equipment.add(new Equipment(Constants.Equipment.gloves,chromosome.getChromosome()[4]));
+        this.equipment.add(new Equipment(Constants.Equipment.front,chromosome.getChromosome()[5]));
+        this.chromosome = c;
+    }
 
     public abstract Double calculatePerformance();
 
@@ -80,11 +103,11 @@ public abstract class BasePlayer {
     }
 
     public void calculateATM() {
-        this.atm = 0.7 - Math.pow((3 * this.height - 5), 4) + Math.pow((3 * this.height - 5), 2) + this.height / 4;
+        this.atm = 0.7 - Math.pow((3 * this.height - 5), 4) + Math.pow((3 * this.height - 5), 2) + (float)this.height / 4;
     }
 
     public void calculateDEM() {
-        this.dem = 1.9 + Math.pow((2.5 * this.height - 4.16), 4) + Math.pow((2.5 * this.height - 4.16), 2) + (3 * this.height) / 10;
+        this.dem = 1.9 + Math.pow((2.5 * this.height - 4.16), 4) + Math.pow((2.5 * this.height - 4.16), 2) + (3 * (float)this.height) / 10;
     }
 
 }
