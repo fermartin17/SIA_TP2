@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class Infiltrate extends BasePlayer {
 
+    public Infiltrate(String name){super(name);}
     public Infiltrate(){super();}
 
     public Infiltrate(Chromosome chromosome){

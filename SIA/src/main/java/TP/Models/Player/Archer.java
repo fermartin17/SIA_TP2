@@ -10,6 +10,7 @@ import lombok.Setter;
 public class Archer extends BasePlayer {
 
     public Archer(){super();}
+    public Archer(String name){super(name);}
 
     public Archer(Chromosome chromosome){
         super(chromosome);

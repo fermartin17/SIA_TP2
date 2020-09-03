@@ -42,6 +42,16 @@ public abstract class BasePlayer {
         this.health = this.resistance = 0;
     }
 
+    public BasePlayer(String name){
+        this.name = name;
+        this.equipment = new ArrayList<>(Chromosome.S -1);
+        this.chromosome = new Chromosome();
+        this.atm = dem = height = 0;
+        this.attack = defense = performance = 0;
+        this.strength = this.agility = this.pericia = 0;
+        this.health = this.resistance = 0;
+    }
+
     public BasePlayer(Chromosome c){
         this.height = chromosome.getChromosome()[0];
         this.equipment.add(new Equipment(Constants.Equipment.weapons,chromosome.getChromosome()[1]));

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class Defender extends BasePlayer {
 
+    public Defender(String name){super(name);}
     public Defender(){super();}
 
     public Defender(Chromosome chromosome){

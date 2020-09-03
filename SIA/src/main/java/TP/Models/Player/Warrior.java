@@ -10,7 +10,8 @@ import lombok.Setter;
 @Setter
 public class Warrior extends BasePlayer {
 
-    public Warrior() { super();}
+    public Warrior(String name) { super(name);}
+    public Warrior(){super();}
 
     public Warrior(Chromosome c) { super(c); }
 
