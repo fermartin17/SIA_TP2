@@ -1,8 +1,6 @@
 package TP;
 
 import TP.Configuration.ConfigurationFile;
-import TP.Configuration.MutationConfiguration;
-import TP.Configuration.SelectionMethod;
 import TP.Constants.Constants;
 import TP.Helpers.Factories.ClassesFactory;
 import TP.Helpers.Factories.CrossoverFactory;
@@ -11,8 +9,7 @@ import TP.Helpers.Factories.SelectionMethodFactory;
 import TP.Interfaces.*;
 import TP.Models.BaseCutCriteria;
 import TP.Models.BasePlayer;
-import TP.Models.BaseSelection;
-import TP.Models.CutCriteria.*;
+import TP.Models.Selection;
 import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
@@ -20,7 +17,6 @@ import TP.Services.RedisService;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Game {
 
@@ -33,10 +29,10 @@ public class Game {
     private Map<Integer, Equipment> weapons;
     private Map<Integer, Equipment> boots;
 
-    private ISelection fatherMethod_1;
-    private ISelection fatherMethod_2;
-    private ISelection individualMethod_1;
-    private ISelection individualMethod_2;
+    private Selection fatherMethod_1;
+    private Selection fatherMethod_2;
+    private Selection individualMethod_1;
+    private Selection individualMethod_2;
 
     private ICrossover crossoverMethod;
 

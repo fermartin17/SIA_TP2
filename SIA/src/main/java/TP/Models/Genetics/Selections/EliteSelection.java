@@ -1,8 +1,7 @@
 package TP.Models.Genetics.Selections;
 
-import TP.Interfaces.ISelection;
 import TP.Models.BasePlayer;
-import TP.Models.BaseSelection;
+import TP.Models.Selection;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class EliteSelection extends BaseSelection implements ISelection {
+public class EliteSelection extends Selection {
 
     private static int K = 100; //TODO: agarrar del archivo de configuración
 
