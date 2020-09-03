@@ -79,6 +79,7 @@ public class Game {
         criterias.add(conf.getTimeCriteria());
         criterias.add(conf.getStructureCriteria());
 
+        this.poblationNumber = conf.getPoblation();
         this.cutCriteria = prepareCutCriteria(criterias);
         this.generationNumber = conf.getGenerationNumber();
     }

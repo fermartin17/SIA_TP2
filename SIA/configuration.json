@@ -1,21 +1,21 @@
 {
    "fatherMethod_1":{
-      "percentage":0.7,
+      "percentage":0.2,
       "name":"EliteSelection"
    },
    "fatherMethod_2":{
-      "percentage":0.3,
-      "name":"EliteSelection"
+      "percentage":0.8,
+      "name":"RouletteSelection"
    },
    "individualMethod_1":{
-      "percentage":1.0,
+      "percentage":0.7,
       "name":"EliteSelection"
    },
    "individualMethod_2":{
-      "percentage":0.0,
-      "name":"EliteSelection"
+      "percentage":0.3,
+      "name":"RouletteSelection"
    },
-   "crossoverMethod":"AnularCrossOver",
+   "crossoverMethod":"TwoPointsCrossOver",
    "mutation":{
       "name":"GenMutation",
       "probability":0.7
@@ -31,8 +31,8 @@
       "inUse":false
    },
    "numberOfGenerationsCriteria":{
-      "maxCount":0,
-      "inUse":false
+      "maxCount":5,
+      "inUse":true
    },
    "structureCriteria":{
       "percentage":0.0,
@@ -41,8 +41,10 @@
    },
    "timeCriteria":{
       "startTime":0.0,
-      "maxTime":10.0,
-      "inUse":true
+      "maxTime":0.0,
+      "inUse":false
    },
+   "poblation":100,
+   "generationNumber":50,
    "individualClass":"Warrior"
 }
