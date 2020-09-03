@@ -25,7 +25,6 @@ public class ConfigurationFile {
     private StructureCriteria structureCriteria;
     private TimeCriteria timeCriteria;
 
-    private int height;
     private String individualClass;
 
     public ConfigurationFile(){
