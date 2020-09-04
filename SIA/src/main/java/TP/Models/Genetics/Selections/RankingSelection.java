@@ -14,16 +14,15 @@ public class RankingSelection extends RouletteSelection{
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-        population.sort(Comparator.comparing(BasePlayer::getPerformance));
+        population.sort(Comparator.comparing(BasePlayer::calculatePerformance));
         Collections.reverse(population);
 
-        int totalCount = population.size() -1 ;
+        int totalCount = population.size();
         List<Double> relatives = new ArrayList<Double>();
         for(int i = 0; i < population.size(); i++) {
             relatives.add((double) ((totalCount - i)/totalCount));
             i++;
         }
-
         return super.makeSelection(population,relatives);
     }
 }
