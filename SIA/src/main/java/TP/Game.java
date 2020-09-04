@@ -124,6 +124,7 @@ public class Game {
             playerAux.getEquipment().add(boots.get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(weapons.get(rand.nextInt(1000000)));
             playerAux.setHeight(rand.nextInt(70) + floorHeight);
+            playerAux.CalculateAll();
             randomPopulation.add(playerAux);
             i++;
         }

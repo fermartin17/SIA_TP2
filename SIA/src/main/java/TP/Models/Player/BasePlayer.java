@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Setter
@@ -122,5 +123,24 @@ public abstract class BasePlayer {
 
     public BasePlayer comparePerformance(BasePlayer player){
         return this.getPerformance() >= player.getPerformance() ? this : player;
+    }
+
+    public void CalculateAll(){
+        calculateATM();
+        calculateDEM();
+        calculateAgility();
+        calculateHealth();
+        calculatePericia();
+        calculateResistance();
+        calculateStrength();
+        calculateAttack();
+        calculateDefense();
+
+        this.chromosome.getChromosome()[0] = this.height;
+        this.chromosome.getChromosome()[1] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.weapons)).findFirst().orElse(null)).getId();
+        this.chromosome.getChromosome()[2] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.boots)).findFirst().orElse(null)).getId();
+        this.chromosome.getChromosome()[3] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.helmet)).findFirst().orElse(null)).getId();
+        this.chromosome.getChromosome()[4] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.gloves)).findFirst().orElse(null)).getId();
+        this.chromosome.getChromosome()[5] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.front)).findFirst().orElse(null)).getId();
     }
 }
