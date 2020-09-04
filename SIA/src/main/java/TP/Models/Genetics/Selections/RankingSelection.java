@@ -14,7 +14,7 @@ public class RankingSelection extends RouletteSelection{
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-        population.sort(Comparator.comparing(BasePlayer::calculatePerformance));
+        population.sort(Comparator.comparing(BasePlayer::getPerformance));
         Collections.reverse(population);
 
         int totalCount = population.size();
