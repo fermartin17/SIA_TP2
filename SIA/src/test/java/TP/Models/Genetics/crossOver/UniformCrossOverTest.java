@@ -1,6 +1,7 @@
-package TP.Models.Genetics;
+package TP.Models.Genetics.crossOver;
 
 import TP.Interfaces.ICrossover;
+import TP.Models.Genetics.Chromosome;
 import TP.Models.Genetics.Crossovers.UniformCrossOver;
 import org.junit.Assert;
 import org.junit.Before;

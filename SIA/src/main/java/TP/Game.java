@@ -48,7 +48,7 @@ public class Game {
 
     private int poblationNumber;
 
-    private List<BasePlayer> poblation;
+    private List<BasePlayer> initialPopulation;
 
     private int generationNumber;
 
@@ -123,20 +123,23 @@ public class Game {
             playerAux.getEquipment().add(gloves.get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(boots.get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(weapons.get(rand.nextInt(1000000)));
-            playerAux.setHeight(rand.nextInt(70) + floorHeight);
+            //playerAux.setHeight(rand.nextInt(70) + floorHeight);
+            playerAux.setHeight(ThreadLocalRandom.current().nextInt(130, 201));
             playerAux.CalculateAll();
             randomPopulation.add(playerAux);
             i++;
         }
-        this.poblation = randomPopulation;
+        this.initialPopulation = randomPopulation;
     }
 
     public void run() {
-
         generateRandomPopulation();
-        Generation generation = new Generation(this.poblation);
+        System.out.println("random population generated");
+        Generation generation = new Generation(initialPopulation, fillMethod, service,
+                                                parentsSelection, replacementSelection);
         while (!this.cutCriteria.cutProgram(generation)) {
-            generation.nextGeneration(this.fillMethod.fill(generation.getCurrentPopulation(), this.parentsSelection, this.replacementSelection,service));
+            System.out.println("running generation" + generation.getGenerationNumber());
+            generation.nextGeneration();
         }
     }
 

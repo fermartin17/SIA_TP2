@@ -74,51 +74,40 @@ public abstract class BasePlayer {
     }
 
     public void calculateStrength() {
-        double equipmentStrength = 0;
-        for (Equipment eq : equipment)
-            equipmentStrength += eq.getStrength();
-
+        double equipmentStrength = equipment.stream().mapToDouble(Equipment::getStrength).sum();
         this.strength = 100 * Math.tanh(0.01 * equipmentStrength);
     }
 
     public void calculateAgility() {
-        double equipmentAgility = 0;
-        for (Equipment eq : equipment)
-            equipmentAgility += eq.getAgility();
-
+        double equipmentAgility = equipment.stream().mapToDouble(Equipment::getAgility).sum();
         this.agility = Math.tanh(0.01 * equipmentAgility);
     }
 
     public void calculatePericia() {
-        double equipmentPericia = 0;
-        for (Equipment eq : equipment)
-            equipmentPericia += eq.getPericia();
-
+        double equipmentPericia = equipment.stream().mapToDouble(Equipment::getPericia).sum();
         this.pericia = 0.6 * Math.tanh(0.01 * equipmentPericia);
     }
 
     public void calculateHealth() {
-        double equipmentHealth = 0;
-        for (Equipment eq : equipment)
-            equipmentHealth += eq.getHealth();
-
+        double equipmentHealth = equipment.stream().mapToDouble(Equipment::getHealth).sum();
         this.health = 100 * Math.tanh(0.01 * equipmentHealth);
     }
 
     public void calculateResistance() {
-        double equipmentResistance = 0;
-        for (Equipment eq : equipment)
-            equipmentResistance += eq.getResistence();
-
+        double equipmentResistance = equipment.stream().mapToDouble(Equipment::getResistence).sum();
         this.resistance = Math.tanh(0.01 * equipmentResistance);
     }
 
     public void calculateATM() {
-        this.atm = 0.7 - Math.pow((3 * this.height - 5), 4) + Math.pow((3 * this.height - 5), 2) + (float)this.height / 4;
+        double heightInMeters =  (double) this.height / 100;
+        double aux = 3 * heightInMeters - 5;
+        this.atm = 0.7  - Math.pow(aux, 4) + Math.pow(aux, 2) + heightInMeters / 4;
     }
 
     public void calculateDEM() {
-        this.dem = 1.9 + Math.pow((2.5 * this.height - 4.16), 4) + Math.pow((2.5 * this.height - 4.16), 2) + (3 * (float)this.height) / 10;
+        double heightInMeters =  (double) this.height / 100;
+        double aux = 2.5 * heightInMeters - 4.16;
+        this.dem = 1.9  + Math.pow(aux, 4) + Math.pow(aux, 2) - 3 * heightInMeters / 10;
     }
 
     public BasePlayer comparePerformance(BasePlayer player){
@@ -135,7 +124,6 @@ public abstract class BasePlayer {
         calculateStrength();
         calculateAttack();
         calculateDefense();
-
         this.chromosome.getChromosome()[0] = this.height;
         this.chromosome.getChromosome()[1] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.weapons)).findFirst().orElse(null)).getId();
         this.chromosome.getChromosome()[2] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.boots)).findFirst().orElse(null)).getId();

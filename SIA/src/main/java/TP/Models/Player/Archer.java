@@ -18,6 +18,13 @@ public class Archer extends BasePlayer {
 
     @Override
     public Double calculatePerformance() {
-        return 0.9 * getAttack() + 0.1 * getDefense();
+        this.setPerformance(0.9 * getAttack() + 0.1 * getDefense());
+        return this.getPerformance();
+    }
+
+    @Override
+    public void CalculateAll() {
+        super.CalculateAll();
+        calculatePerformance();
     }
 }
