@@ -14,6 +14,13 @@ public class RouletteSelection extends Selection {
         super(K, percentage);
     }
 
+
+    public List<BasePlayer> makeSelection(List<BasePlayer> population, List<Double> relatives) {
+        List<Double> randoms = generateRandoms();
+        List<Double> accumulated = calculateAccumulatedList(relatives);
+        return selectPopulation(accumulated, randoms, population);
+    }
+
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
         double totalSum = population.stream().mapToDouble(BasePlayer::getPerformance).sum();

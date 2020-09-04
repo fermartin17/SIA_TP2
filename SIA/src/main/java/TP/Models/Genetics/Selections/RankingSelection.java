@@ -2,9 +2,7 @@ package TP.Models.Genetics.Selections;
 
 import TP.Models.Player.BasePlayer;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RankingSelection extends RouletteSelection{
@@ -14,9 +12,18 @@ public class RankingSelection extends RouletteSelection{
         super(K, percentage);
     }
 
-//    @Override
-//    public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-//        population.sort(Comparator.comparing(BasePlayer:: getPerformance));
-//        Collections.reverse(population);
-//    }
+    @Override
+    public List<BasePlayer> makeSelection(List<BasePlayer> population) {
+        population.sort(Comparator.comparing(BasePlayer::getPerformance));
+        Collections.reverse(population);
+
+        int totalCount = population.size() -1 ;
+        List<Double> relatives = new ArrayList<Double>();
+        for(int i = 0; i < population.size(); i++) {
+            relatives.add((double) ((totalCount - i)/totalCount));
+            i++;
+        }
+
+        return super.makeSelection(population,relatives);
+    }
 }
