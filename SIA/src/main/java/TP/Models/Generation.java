@@ -28,9 +28,6 @@ public class Generation {
     private int generationNumber;
     public double lastGenerationPerformance;
     private IService redisService;
-    private IFillMethod fillMethod;
-    private CombinedSelection parentSelection;
-    private CombinedSelection replacementSelection;
 
 
     //constructor vacío para los tests
@@ -39,23 +36,16 @@ public class Generation {
         this.bestFitness = null;
         this.generationNumber = 0;
         this.lastGenerationPerformance = 0;
-        this.fillMethod = null;
         this.redisService = null;
-        this.parentSelection = null;
-        this.replacementSelection = null;
     }
 
 
-    public Generation(List<BasePlayer> currentPopulation, IFillMethod fillMethod, IService redisService,
-                      CombinedSelection parentSelection, CombinedSelection replacementSelection){
+    public Generation(List<BasePlayer> currentPopulation, IService redisService){
         this.currentPopulation = currentPopulation;
         this.bestFitness = null;
         this.generationNumber = 0;
         this.lastGenerationPerformance = 0;
-        this.fillMethod = fillMethod;
         this.redisService = redisService;
-        this.parentSelection = parentSelection;
-        this.replacementSelection = replacementSelection;
     }
 
     public static List<BasePlayer> breed(List<BasePlayer> selectedParents, ICrossover crossover, RedisService service){
@@ -74,17 +64,16 @@ public class Generation {
         return offspring;
     }
 
-    public void nextGeneration(){
+    public void nextGeneration(List<BasePlayer> newPopulation){
         compareBestFitness();
-        System.out.println("Generation Best Fitness: " + bestFitness.calculatePerformance());
-        this.currentPopulation = fillMethod.fill(currentPopulation, parentSelection,
-                                replacementSelection, redisService);
+        System.out.println("Best Fitness: " + bestFitness.calculatePerformance());
+        this.currentPopulation = newPopulation;
         this.generationNumber++;
     }
 
     private void compareBestFitness(){
         BasePlayer aux = currentPopulation.stream().max(Comparator.comparing(BasePlayer::calculatePerformance)).get();
-        System.out.println(aux.getPerformance());
+        System.out.println("Current Generation Best Fitness: " + aux.getPerformance());
         this.lastGenerationPerformance = aux.getPerformance();
         this.bestFitness =  bestFitness == null? aux : this.bestFitness.comparePerformance(aux);
     }
