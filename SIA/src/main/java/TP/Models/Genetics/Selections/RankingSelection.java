@@ -14,9 +14,9 @@ public class RankingSelection extends RouletteSelection{
         super(K, percentage);
     }
 
-    @Override
-    public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-        population.sort(Comparator.comparing(BasePlayer:: getPerformance));
-        Collections.reverse(population);
-    }
+//    @Override
+//    public List<BasePlayer> makeSelection(List<BasePlayer> population) {
+//        population.sort(Comparator.comparing(BasePlayer:: getPerformance));
+//        Collections.reverse(population);
+//    }
 }

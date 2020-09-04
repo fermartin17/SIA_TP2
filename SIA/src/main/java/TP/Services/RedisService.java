@@ -22,10 +22,20 @@ public class RedisService implements IService {
 
     private Jedis jedis;
     private Gson gson;
+    private Map<Integer, Equipment> helmets;
+    private Map<Integer, Equipment> fronts;
+    private Map<Integer, Equipment> gloves;
+    private Map<Integer, Equipment> weapons;
+    private Map<Integer, Equipment> boots;
 
     public RedisService() {
         this.jedis = new Jedis("redis://127.0.0.1:6379");
         this.gson = new Gson();
+        this.helmets = new HashMap<Integer, Equipment>();
+        this.fronts = new HashMap<Integer, Equipment>();
+        this.gloves = new HashMap<Integer, Equipment>();
+        this.weapons = new HashMap<Integer, Equipment>();
+        this.boots = new HashMap<Integer, Equipment>();
     }
 
     @Override

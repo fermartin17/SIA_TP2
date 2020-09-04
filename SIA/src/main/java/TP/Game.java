@@ -27,7 +27,7 @@ import java.util.Random;
 public class Game {
 
     private ConfigurationFile conf;
-    private IService service;
+    private RedisService service;
 
     private Map<Integer, Equipment> helmets;
     private Map<Integer, Equipment> fronts;
@@ -90,6 +90,12 @@ public class Game {
         this.gloves = service.getData(Constants.Equipment.gloves);
         this.weapons = service.getData(Constants.Equipment.weapons);
         this.boots = service.getData(Constants.Equipment.boots);
+
+        this.service.setBoots(this.boots);
+        this.service.setFronts(this.fronts);
+        this.service.setGloves(this.gloves);
+        this.service.setHelmets(this.helmets);
+        this.service.setWeapons(this.weapons);
     }
 
     private BaseCutCriteria prepareCutCriteria(List<BaseCutCriteria> criterias) {
@@ -118,6 +124,7 @@ public class Game {
             playerAux.getEquipment().add(boots.get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(weapons.get(rand.nextInt(1000000)));
             playerAux.setHeight(rand.nextInt(70) + floorHeight);
+            playerAux.CalculateAll();
             randomPopulation.add(playerAux);
             i++;
         }
@@ -129,7 +136,7 @@ public class Game {
         generateRandomPopulation();
         Generation generation = new Generation(this.poblation);
         while (!this.cutCriteria.cutProgram(generation)) {
-            generation.nextGeneration(this.fillMethod.fill(generation.getCurrentPopulation(), this.parentsSelection, this.replacementSelection));
+            generation.nextGeneration(this.fillMethod.fill(generation.getCurrentPopulation(), this.parentsSelection, this.replacementSelection,service));
         }
     }
 
