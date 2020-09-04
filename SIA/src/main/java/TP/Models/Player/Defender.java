@@ -18,6 +18,13 @@ public class Defender extends BasePlayer {
 
     @Override
     public Double calculatePerformance() {
-        return 0.3 * getAttack() + 0.8 * getDefense();
+        this.setPerformance(0.3 * getAttack() + 0.8 * getDefense());
+        return this.getPerformance();
+    }
+
+    @Override
+    public void CalculateAll() {
+        super.CalculateAll();
+        calculatePerformance();
     }
 }

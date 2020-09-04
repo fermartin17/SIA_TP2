@@ -18,6 +18,13 @@ public class Infiltrate extends BasePlayer {
 
     @Override
     public Double calculatePerformance() {
-        return 0.8 * getAttack() + 0.3 * getDefense();
+        this.setPerformance(0.8 * getAttack() + 0.3 * getDefense());
+        return this.getPerformance();
+    }
+
+    @Override
+    public void CalculateAll() {
+        super.CalculateAll();
+        calculatePerformance();
     }
 }

@@ -23,7 +23,7 @@ public class RouletteSelection extends Selection {
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-        double totalSum = population.stream().mapToDouble(BasePlayer::getPerformance).sum();
+        double totalSum = population.stream().mapToDouble(BasePlayer::calculatePerformance).sum();
         List<Double> relatives = calculateRelativePerformance(population, totalSum);
         List<Double> accumulated = calculateAccumulatedList(relatives);
         List<Double> randoms = generateRandoms();
@@ -42,7 +42,9 @@ public class RouletteSelection extends Selection {
     private List<Double> calculateAccumulatedList(List<Double> relatives){
         List<Double> acum = new ArrayList<>(this.getK());
         acum.add(relatives.get(0));
-        IntStream.range(1, this.getK()).forEach(i -> acum.add(acum.get(i - 1) + acum.get(i)));
+        for(int i= 1; i < relatives.size() - 1; i++){
+            acum.add(relatives.get(i-1) + relatives.get(i));
+        }
         return acum;
     }
 

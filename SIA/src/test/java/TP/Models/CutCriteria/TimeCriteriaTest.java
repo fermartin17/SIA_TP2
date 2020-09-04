@@ -1,6 +1,5 @@
 package TP.Models.CutCriteria;
 
-import TP.Interfaces.ICutCriteria;
 import TP.Models.Generation;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,7 +7,7 @@ import org.junit.Test;
 
 public class TimeCriteriaTest {
 
-    ICutCriteria cutCriteria;
+    BaseCutCriteria cutCriteria;
 
     @Before
     public void setup(){

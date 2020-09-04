@@ -3,8 +3,10 @@ package TP.Models;
 import TP.Constants.Constants;
 import TP.Helpers.Factories.ClassesFactory;
 import TP.Interfaces.ICrossover;
+import TP.Interfaces.IFillMethod;
 import TP.Interfaces.IService;
 import TP.Models.Genetics.Chromosome;
+import TP.Models.Genetics.Selections.CombinedSelection;
 import TP.Models.Player.BasePlayer;
 import TP.Services.RedisService;
 import lombok.Getter;
@@ -21,24 +23,39 @@ import java.util.List;
 public class Generation {
 
     private List<BasePlayer> currentPopulation;
-    private double bestFitness;
+    private BasePlayer bestFitness;
     private double currentFitness;
     private int generationNumber;
     public double lastGenerationPerformance;
     private IService redisService;
+    private IFillMethod fillMethod;
+    private CombinedSelection parentSelection;
+    private CombinedSelection replacementSelection;
 
+
+    //constructor vacío para los tests
     public Generation(){
-        this.currentPopulation = new LinkedList<>();
-        this.bestFitness = this.currentFitness = 0;
+        this.currentPopulation = new ArrayList<>();
+        this.bestFitness = null;
         this.generationNumber = 0;
         this.lastGenerationPerformance = 0;
+        this.fillMethod = null;
+        this.redisService = null;
+        this.parentSelection = null;
+        this.replacementSelection = null;
     }
 
-    public Generation(List<BasePlayer> currentPopulation){
+
+    public Generation(List<BasePlayer> currentPopulation, IFillMethod fillMethod, IService redisService,
+                      CombinedSelection parentSelection, CombinedSelection replacementSelection){
         this.currentPopulation = currentPopulation;
         this.bestFitness = null;
         this.generationNumber = 0;
         this.lastGenerationPerformance = 0;
+        this.fillMethod = fillMethod;
+        this.redisService = redisService;
+        this.parentSelection = parentSelection;
+        this.replacementSelection = replacementSelection;
     }
 
     public static List<BasePlayer> breed(List<BasePlayer> selectedParents, ICrossover crossover, RedisService service){
@@ -47,42 +64,29 @@ public class Generation {
         Collections.shuffle(selectedParents);
         Chromosome[] childrenChromosomes;
         //agarramos el tipo de player y su constructor
-        Class<?> playerClass = selectedParents.get(0).getClass();
-        Constructor<?> playerConstructor = null;
-        //agarramos el constructor de esa clase
-        try {
-            playerConstructor = playerClass.getConstructor(playerClass);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
         for(int i = 0; i < selectedParents.size() - 1; i++){
-            childrenChromosomes = crossover.cross(selectedParents.get(i).getChromosome(),
-                            selectedParents.get(i+1).getChromosome());
-            BasePlayer child1 = null;
-            BasePlayer child2 = null;
-            assert playerConstructor != null;
-            child1 = generatePlayer(childrenChromosomes[0],service,selectedParents.get(0));
-            child2 = generatePlayer(childrenChromosomes[1],service, selectedParents.get(0));
-//                child1 = (BasePlayer) playerConstructor.newInstance(childrenChromosomes[0]);
-//                child2 = (BasePlayer) playerConstructor.newInstance(childrenChromosomes[1]);
-
-            if(child1 != null) offspring.add(child1);
-            if(child2 != null) offspring.add(child2);
+            childrenChromosomes = crossover.cross(
+                                selectedParents.get(i).getChromosome(),
+                                selectedParents.get(i+1).getChromosome());
+            offspring.add(generatePlayer(childrenChromosomes[0],service, selectedParents.get(0)));
+            offspring.add(generatePlayer(childrenChromosomes[1],service, selectedParents.get(0)));
         }
         return offspring;
     }
 
-    public void nextGeneration(List<BasePlayer> newPopulation){
-        compareBestFitness(newPopulation);
-        this.currentPopulation = new ArrayList<>(newPopulation);
+    public void nextGeneration(){
+        compareBestFitness();
+        System.out.println("Generation Best Fitness: " + bestFitness.calculatePerformance());
+        this.currentPopulation = fillMethod.fill(currentPopulation, parentSelection,
+                                replacementSelection, redisService);
         this.generationNumber++;
     }
 
-    private void compareBestFitness(List<BasePlayer>  newPopulation){
-        BasePlayer aux = newPopulation.stream().max(Comparator.comparing(BasePlayer::getPerformance)).get();
+    private void compareBestFitness(){
+        BasePlayer aux = currentPopulation.stream().max(Comparator.comparing(BasePlayer::calculatePerformance)).get();
         System.out.println(aux.getPerformance());
         this.lastGenerationPerformance = aux.getPerformance();
-        this.bestFitness = this.bestFitness.comparePerformance(aux);
+        this.bestFitness =  bestFitness == null? aux : this.bestFitness.comparePerformance(aux);
     }
 
     private static BasePlayer generatePlayer(Chromosome chromosome, RedisService service, BasePlayer parent){
@@ -98,4 +102,5 @@ public class Generation {
 
         return aux;
     }
+
 }
