@@ -1,7 +1,5 @@
 package TP.Models.Player;
 
-import TP.Constants.Constants;
-import TP.Models.Equipment;
 import TP.Models.Genetics.Chromosome;
 import lombok.Getter;
 import lombok.Setter;

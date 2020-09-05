@@ -4,7 +4,6 @@ import TP.Interfaces.ICrossover;
 import TP.Interfaces.IFillMethod;
 import TP.Interfaces.IService;
 import TP.Models.Genetics.Selections.CombinedSelection;
-import TP.Models.Genetics.Selections.Selection;
 import TP.Models.Player.BasePlayer;
 import TP.Services.RedisService;
 

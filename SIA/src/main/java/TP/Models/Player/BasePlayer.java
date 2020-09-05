@@ -1,17 +1,14 @@
 package TP.Models.Player;
 
 import TP.Constants.Constants;
-import TP.Interfaces.IMutation;
 import TP.Models.Equipment;
 import TP.Models.Genetics.Chromosome;
-import TP.Models.Genetics.Mutations.Mutation;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Setter
 @Getter

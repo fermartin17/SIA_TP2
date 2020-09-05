@@ -1,11 +1,9 @@
 package TP.Models.Genetics.Selections;
 
 import TP.Interfaces.ISelection;
-import TP.Models.Player.BasePlayer;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Setter
 @Getter

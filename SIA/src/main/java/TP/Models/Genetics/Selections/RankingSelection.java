@@ -3,7 +3,6 @@ package TP.Models.Genetics.Selections;
 import TP.Models.Player.BasePlayer;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class RankingSelection extends RouletteSelection{
 
@@ -20,7 +19,7 @@ public class RankingSelection extends RouletteSelection{
         int totalCount = population.size();
         List<Double> relatives = new ArrayList<Double>();
         for(int i = 0; i < population.size(); i++) {
-            relatives.add((double) ((totalCount - i)/totalCount));
+            relatives.add((double) ((totalCount - i)/Math.pow(totalCount,2)));
             i++;
         }
         return super.makeSelection(population,relatives);

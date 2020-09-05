@@ -22,25 +22,18 @@ public class BoltzmanSelection extends RouletteSelection {
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-        double total;
         double t = getTemperature();
-
-
-        total = (population.stream().mapToDouble(BasePlayer::getPerformance).sum()) / t;
+        double total = (population.stream().mapToDouble(i -> Math.exp(i.getPerformance())/t)).average().getAsDouble();
 
         List<Double> relatives = (List<Double>) population.stream()
-                .map(x -> x.getPerformance() / total)
+                .map(x -> ((Math.exp(x.getPerformance())/t) / total)/population.size())
                 .collect(Collectors.toList());
-
 
         this.generationNumber++;
         return super.makeSelection(population, relatives);
-
-
     }
 
     private double getTemperature() {
         return (this.tC + (this.t0 - tC) * Math.exp(-boltzmanConstant * generationNumber));
     }
-
 }

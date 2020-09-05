@@ -1,6 +1,5 @@
 package TP.Models.Genetics;
 
-import TP.Interfaces.IMutation;
 import lombok.Getter;
 
 import java.util.Arrays;

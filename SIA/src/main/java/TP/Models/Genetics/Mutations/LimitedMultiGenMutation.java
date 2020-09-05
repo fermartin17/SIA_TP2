@@ -1,6 +1,5 @@
 package TP.Models.Genetics.Mutations;
 
-import TP.Interfaces.IMutation;
 import TP.Models.Genetics.Chromosome;
 import lombok.Getter;
 import lombok.Setter;
