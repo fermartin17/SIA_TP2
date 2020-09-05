@@ -29,12 +29,6 @@ public class Game {
     private ConfigurationFile conf;
     private RedisService service;
 
-    private Map<Integer, Equipment> helmets;
-    private Map<Integer, Equipment> fronts;
-    private Map<Integer, Equipment> gloves;
-    private Map<Integer, Equipment> weapons;
-    private Map<Integer, Equipment> boots;
-
     private CombinedSelection parentsSelection;
     private CombinedSelection replacementSelection;
 
@@ -93,17 +87,24 @@ public class Game {
     }
 
     private void prepareEquipment() {
-        this.helmets = service.getData(Constants.Equipment.helmet);
-        this.fronts = service.getData(Constants.Equipment.front);
-        this.gloves = service.getData(Constants.Equipment.gloves);
-        this.weapons = service.getData(Constants.Equipment.weapons);
-        this.boots = service.getData(Constants.Equipment.boots);
 
-        this.service.setBoots(this.boots);
-        this.service.setFronts(this.fronts);
-        this.service.setGloves(this.gloves);
-        this.service.setHelmets(this.helmets);
-        this.service.setWeapons(this.weapons);
+        Map<Integer, Equipment> helmets;
+        Map<Integer, Equipment> fronts;
+        Map<Integer, Equipment> gloves;
+        Map<Integer, Equipment> weapons;
+        Map<Integer, Equipment> boots;
+
+        helmets = service.getData(Constants.Equipment.helmet);
+        fronts = service.getData(Constants.Equipment.front);
+        gloves = service.getData(Constants.Equipment.gloves);
+        weapons = service.getData(Constants.Equipment.weapons);
+        boots = service.getData(Constants.Equipment.boots);
+
+        this.service.setBoots(boots);
+        this.service.setFronts(fronts);
+        this.service.setGloves(gloves);
+        this.service.setHelmets(helmets);
+        this.service.setWeapons(weapons);
     }
 
     private BaseCutCriteria prepareCutCriteria(List<BaseCutCriteria> criterias) {
@@ -122,17 +123,17 @@ public class Game {
         int i = 0;
         BasePlayer playerAux;
         Random rand = new Random();
-        int floorHeight = 130;
 
         while (i < this.poblationNumber) {
             playerAux = ClassesFactory.givePlayer(player.getName());
-            playerAux.getEquipment().add(fronts.get(rand.nextInt(1000000)));
-            playerAux.getEquipment().add(helmets.get(rand.nextInt(1000000)));
-            playerAux.getEquipment().add(gloves.get(rand.nextInt(1000000)));
-            playerAux.getEquipment().add(boots.get(rand.nextInt(1000000)));
-            playerAux.getEquipment().add(weapons.get(rand.nextInt(1000000)));
-            //playerAux.setHeight(rand.nextInt(70) + floorHeight);
+            playerAux.getEquipment().add(service.getFronts().get(rand.nextInt(1000000)));
+            playerAux.getEquipment().add(service.getHelmets().get(rand.nextInt(1000000)));
+            playerAux.getEquipment().add(service.getGloves().get(rand.nextInt(1000000)));
+            playerAux.getEquipment().add(service.getBoots().get(rand.nextInt(1000000)));
+            playerAux.getEquipment().add(service.getWeapons().get(rand.nextInt(1000000)));
+
             playerAux.setHeight(ThreadLocalRandom.current().nextInt(130, 201));
+
             playerAux.CalculateAll();
             randomPopulation.add(playerAux);
             i++;

@@ -19,6 +19,10 @@ public class SelectionMethodFactory {
                 return new RouletteSelection(populationQuantity, method.getPercentage());
             case Constants.Selection.UniversalSelection:
                 return new UniversalSelection(populationQuantity, method.getPercentage());
+            case Constants.Selection.BoltzmannSelection:
+                return new BoltzmannSelection(populationQuantity, method.getPercentage());
+            case Constants.Selection.RankingSelection:
+                return new RankingSelection(populationQuantity, method.getPercentage());
             default:
                 throw new IllegalArgumentException("Invalid crossover");
         }

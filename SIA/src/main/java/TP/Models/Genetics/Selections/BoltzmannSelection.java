@@ -5,48 +5,36 @@ import TP.Models.Player.BasePlayer;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BoltzmannSelection extends Selection{
+public class BoltzmannSelection extends RouletteSelection {
+
+    private long generationNumber;
 
     public BoltzmannSelection(int K, double percentage) {
         super(K, percentage);
+        this.generationNumber = 0;
     }
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
-        double total = 0;
-        double t = 0;
+        double total;
+        double t = getTemperature(0,0,super.getK(),generationNumber);
 
-        total = (population.stream().mapToDouble(BasePlayer::getPerformance).sum())/t;
 
-        List<Double> relatives = population.stream().mapToDouble(i -> i.getPerformance()).forEach(i -> i/total).collect(Collectors.toList());
+        total = (population.stream().mapToDouble(BasePlayer::getPerformance).sum()) / t;
+
+        List<Double> relatives = (List<Double>) population.stream()
+                .map(x -> x.getPerformance() / total)
+                .collect(Collectors.toList());
+
+
+        this.generationNumber++;
+        return super.makeSelection(population, relatives);
+
 
     }
 
-
-    public void aaaa(Player[] players, int k, double t){
-        Player[] aux = new Player[k];
-        double total = 0;
-        double[] relative = new double[aux.length];
-        double[] accumulated = new double[aux.length];
-
-        for (Player p : players) {
-            total+= Math.exp(p.performance()/t);
-        }
-        for (int i = 0; i < relative.length; i++) {
-            relative[i] = Math.exp(players[i].performance()/t)/total;
-        }
-        accumulated[0] = relative[0];
-        for (int i = 1; i < accumulated.length; i++) {
-            accumulated[i] = relative[i] + accumulated[i-1];
-        }
-        for (int i = 0; i < k; i++) {
-            double random = Math.random();
-            for (int j = 1; j < accumulated.length; j++) {
-                if (accumulated[j] > random) {
-                    aux[i] = players[j-1];
-                }
-            }
-        }
-        return aux;
+    private static double getTemperature(double T0, double Tc, double K, long generationNumber) {
+        return (Tc + (T0 - Tc) * Math.exp(-K * generationNumber));
     }
+
 }
