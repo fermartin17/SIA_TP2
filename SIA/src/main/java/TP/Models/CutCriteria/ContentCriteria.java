@@ -22,7 +22,7 @@ public class ContentCriteria extends BaseCutCriteria {
 
     @Override
     public boolean cutProgram(Generation g) {
-        if(g.getBestFitness().getPerformance() - g.getLastGenerationPerformance() < precision){
+        if(g.getBestFitness().getPerformance() - g.getCurrentFitness() < precision){
             this.currentHits++;
         }else{
             currentHits = 0;
