@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DeterministicTournament extends Selection {
 
-    private int M = 10; //TODO: ver esto
+    private int M;
 
     public DeterministicTournament(int K, double percentage, int M){
         super(K, percentage);
