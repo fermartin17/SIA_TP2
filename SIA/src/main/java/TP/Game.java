@@ -64,13 +64,13 @@ public class Game {
         prepareEquipment();
         this.poblationNumber = conf.getPoblation();
         this.generationNumber = conf.getGenerationNumber();
-        Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), this.generationNumber);
-        Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), this.poblationNumber);
+        Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), this.generationNumber,conf.getFatherMethod_1().getBoltzmanT0(),conf.getFatherMethod_1().getBoltzmanTC());
+        Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), this.poblationNumber,conf.getFatherMethod_2().getBoltzmanT0(),conf.getFatherMethod_2().getBoltzmanTC());
         fatherMethod1.setK((int) (this.generationNumber * fatherMethod1.getPercentage()));
         fatherMethod2.setK((int) (this.generationNumber * ( 1 - fatherMethod1.getPercentage())));
 
-        Selection replacementMethod1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), this.generationNumber);
-        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), this.generationNumber);
+        Selection replacementMethod1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), this.generationNumber,conf.getIndividualMethod_1().getBoltzmanT0(),conf.getIndividualMethod_1().getBoltzmanTC());
+        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), this.generationNumber,conf.getIndividualMethod_2().getBoltzmanT0(),conf.getIndividualMethod_2().getBoltzmanTC());
 
         //setear la cantidad de individuos que debe agarrar cada método de selección
         fatherMethod1.setK(     (int) (this.generationNumber *            fatherMethod1.getPercentage()));

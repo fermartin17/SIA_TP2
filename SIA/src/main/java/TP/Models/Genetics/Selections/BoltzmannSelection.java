@@ -8,16 +8,20 @@ import java.util.stream.Collectors;
 public class BoltzmannSelection extends RouletteSelection {
 
     private long generationNumber;
+    private final double t0;
+    private final double tC;
 
-    public BoltzmannSelection(int K, double percentage) {
+    public BoltzmannSelection(int K, double percentage,double t0, double tC) {
         super(K, percentage);
         this.generationNumber = 0;
+        this.t0 = t0;
+        this.tC = tC;
     }
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
         double total;
-        double t = getTemperature(0,0,super.getK(),generationNumber);
+        double t = getTemperature();
 
 
         total = (population.stream().mapToDouble(BasePlayer::getPerformance).sum()) / t;
@@ -33,8 +37,8 @@ public class BoltzmannSelection extends RouletteSelection {
 
     }
 
-    private static double getTemperature(double T0, double Tc, double K, long generationNumber) {
-        return (Tc + (T0 - Tc) * Math.exp(-K * generationNumber));
+    private double getTemperature() {
+        return (this.tC + (this.t0 - tC) * Math.exp(-super.getK() * generationNumber));
     }
 
 }

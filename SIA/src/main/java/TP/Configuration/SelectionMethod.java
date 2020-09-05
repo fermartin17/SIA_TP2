@@ -10,6 +10,8 @@ import javax.naming.SizeLimitExceededException;
 public class SelectionMethod {
     private double percentage;
     private String name;
+    private double boltzmanT0;
+    private double boltzmanTC;
 
     public SelectionMethod(){
         this.name = new String();
