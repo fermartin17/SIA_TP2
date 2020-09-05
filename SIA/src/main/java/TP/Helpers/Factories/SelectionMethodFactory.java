@@ -7,10 +7,10 @@ import TP.Models.Genetics.Selections.*;
 
 public class SelectionMethodFactory {
 
-    public static Selection giveSelection(SelectionMethod method, int populationQuantity, double boltzmanT0, double boltzmanTC) {
+    public static Selection giveSelection(SelectionMethod method, int populationQuantity, double arg1, double arg2) {
         switch (method.getName().toLowerCase()) {
             case Constants.Selection.DeterministicTournament:
-                return new DeterministicTournament(populationQuantity, method.getPercentage());
+                return new DeterministicTournament(populationQuantity, method.getPercentage(), (int) arg1);
             case Constants.Selection.EliteSelection:
                 return new EliteSelection(populationQuantity, method.getPercentage());
             case Constants.Selection.ProbabilisticTournament:
@@ -20,7 +20,7 @@ public class SelectionMethodFactory {
             case Constants.Selection.UniversalSelection:
                 return new UniversalSelection(populationQuantity, method.getPercentage());
             case Constants.Selection.BoltzmanSelection:
-                return new BoltzmanSelection(populationQuantity, method.getPercentage(),boltzmanT0,boltzmanTC);
+                return new BoltzmanSelection(populationQuantity, method.getPercentage(), arg1, arg2);
             case Constants.Selection.RankingSelection:
                 return new RankingSelection(populationQuantity, method.getPercentage());
             default:
