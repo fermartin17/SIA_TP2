@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Chromosome {
 
     public static final int S = 6;
-    private int chromosome[];
+    private int[] chromosome;
 
     public Chromosome(){
         this.chromosome = new int[S];
@@ -39,10 +39,13 @@ public class Chromosome {
         return Arrays.equals(chromosome, c.chromosome);
     }
 
-//    public String toString(){
-//        StringBuilder ret = new StringBuilder();
-//        Arrays.stream(chromosome).forEach(i -> ret.append(i.toString()).append(" "));
-//        return ret.append("\n").toString();
-//    }
+    public String toString(){
+        StringBuilder ret = new StringBuilder();
+        for(int i : chromosome){
+            ret.append(i).append(" ");
+        }
+        ret.append("\n");
+        return ret.toString();
+    }
 
 }

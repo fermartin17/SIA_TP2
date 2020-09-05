@@ -143,6 +143,7 @@ public class Game {
                 writer.flush();
             }
         }
+        System.out.println("Mejor equipamiento: " + generation.getBestFitness().getChromosome().toString());
         //mandar señal al graficador de que terminamos
         if(writer != null) {
             writer.println(String.format(Locale.US, "%08.4f", -1.0));
