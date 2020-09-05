@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 public class App {
@@ -26,6 +28,7 @@ public class App {
                 e.printStackTrace();
             }
         }
+
         File file = new File("configuration.json");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         Gson gson = new Gson();

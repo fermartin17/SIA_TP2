@@ -3,6 +3,7 @@ package TP.Models.Genetics.Selections;
 import TP.Models.Player.BasePlayer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,11 +17,13 @@ public class EliteSelection extends Selection {
 
     @Override
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
+        List<BasePlayer> copy = new ArrayList<>(population);
         //sort by performance
-        population.sort(Comparator.comparing(BasePlayer::calculatePerformance));
+        copy.sort(Comparator.comparing(BasePlayer::calculatePerformance));
+        Collections.reverse(copy);
         //return best K, loop if K > size of population
         return IntStream.range(0, this.getK())
-                .mapToObj(i -> population.get(i % population.size()))
+                .mapToObj(i -> copy.get(i % copy.size()))
                 .collect(Collectors.toCollection(() -> new ArrayList<>(this.getK())));
     }
 }

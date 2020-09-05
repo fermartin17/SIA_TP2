@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -154,13 +155,15 @@ public class Game {
                                                 replacementSelection, service);
             generation.nextGeneration(newPopulation);
             if(writer != null) {
-                writer.println(String.format(Locale.US, "%.4f", generation.getCurrentFitness()));
+                writer.println(String.format(Locale.US, "%08.4f", generation.getCurrentFitness()));
                 writer.flush();
             }
         }
         //mandar señal al graficador de que terminamos
-        writer.println(String.format(Locale.US, "%.4f", -1.000));
-        writer.flush();
+        if(writer != null) {
+            writer.println(String.format(Locale.US, "%08.4f", -1.0));
+            writer.flush();
+        }
     }
 
 }

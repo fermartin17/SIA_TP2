@@ -5,14 +5,14 @@
    },
    "fatherMethod_2":{
       "percentage":0.8,
-      "name":"RouletteSelection"
+      "name":"DeterministicTournament"
    },
    "individualMethod_1":{
-      "percentage":0.7,
+      "percentage":0.2,
       "name":"EliteSelection"
    },
    "individualMethod_2":{
-      "percentage":0.3,
+      "percentage":0.8,
       "name":"RouletteSelection"
    },
    "crossoverMethod":"TwoPointsCrossOver",
@@ -31,7 +31,7 @@
       "inUse":false
    },
    "numberOfGenerationsCriteria":{
-      "maxCount":5,
+      "maxCount":100,
       "inUse":true
    },
    "structureCriteria":{
@@ -44,7 +44,7 @@
       "maxTime":0.0,
       "inUse":false
    },
-   "poblation":100,
-   "generationNumber":50,
+   "poblation":500,
+   "generationNumber":100,
    "individualClass":"Warrior"
 }
