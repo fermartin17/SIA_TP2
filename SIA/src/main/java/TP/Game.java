@@ -1,6 +1,7 @@
 package TP;
 
 import TP.Configuration.ConfigurationFile;
+import TP.Configuration.SelectionMethod;
 import TP.Constants.Constants;
 import TP.Helpers.Factories.ClassesFactory;
 import TP.Helpers.Factories.CrossoverFactory;
@@ -10,7 +11,6 @@ import TP.Interfaces.*;
 import TP.Models.CutCriteria.BaseCutCriteria;
 import TP.Models.FillAll;
 import TP.Models.Generation;
-import TP.Models.Genetics.Chromosome;
 import TP.Models.Genetics.Selections.CombinedSelection;
 import TP.Models.Player.BasePlayer;
 import TP.Models.Genetics.Selections.Selection;
@@ -54,45 +54,32 @@ public class Game {
 
     PrintWriter writer = null;
 
-    public Game(ConfigurationFile conf, OutputStream outputStream) {
 
+    public Game(ConfigurationFile conf, OutputStream outputStream) {
         this.conf = conf;
         service = new RedisService();
-        prepareEquipment();
+        //N
         this.poblationNumber = conf.getPoblation();
+        //K
         this.generationNumber = conf.getGenerationNumber();
-        Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), this.generationNumber,conf.getFatherMethod_1().getBoltzmanT0(),conf.getFatherMethod_1().getBoltzmanTC());
-        Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), this.poblationNumber,conf.getFatherMethod_2().getBoltzmanT0(),conf.getFatherMethod_2().getBoltzmanTC());
-        fatherMethod1.setK((int) (this.generationNumber * fatherMethod1.getPercentage()));
-        fatherMethod2.setK((int) (this.generationNumber * ( 1 - fatherMethod1.getPercentage())));
-
-        Selection replacementMethod1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), this.generationNumber,conf.getIndividualMethod_1().getBoltzmanT0(),conf.getIndividualMethod_1().getBoltzmanTC());
-        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), this.generationNumber,conf.getIndividualMethod_2().getBoltzmanT0(),conf.getIndividualMethod_2().getBoltzmanTC());
-
-        //setear la cantidad de individuos que debe agarrar cada método de selección
-        fatherMethod1.setK(     (int) (this.generationNumber *            fatherMethod1.getPercentage()));
-        fatherMethod2.setK(     (int) (this.generationNumber * ( 1 -      fatherMethod1.getPercentage())));
-        replacementMethod1.setK((int) (this.generationNumber *       replacementMethod1.getPercentage()));
-        replacementMethod2.setK((int) (this.generationNumber * ( 1 - replacementMethod1.getPercentage())));
-
-        this.parentsSelection = new CombinedSelection(fatherMethod1, fatherMethod2);
-        this.replacementSelection = new CombinedSelection(replacementMethod1, replacementMethod2);
-
-        this.fillMethod = new FillAll(CrossoverFactory.giveCrossover(conf.getCrossoverMethod()));
+        //Métodos de selección 1 y 2
+        this.parentsSelection = setupSelection(conf.getFatherMethod_1(), conf.getFatherMethod_2());
+        //Métodos de selección 3 y 4
+        this.replacementSelection = setupSelection(conf.getIndividualMethod_1(), conf.getIndividualMethod_2());
+        //Mutación
         this.mutation = MutationFactory.giveMutation(conf.getMutation());
-
+        //Método de cruza
+        ICrossover crossover = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
+        //Método de implementación
+        this.fillMethod = new FillAll(crossover, mutation, service);
+        //Tipo de player
         this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
-
-        List<BaseCutCriteria> criterias = new LinkedList<>();
-
-        criterias.add(conf.getAcceptableSolutionCriteria());
-        criterias.add(conf.getContentCriteria());
-        criterias.add(conf.getNumberOfGenerationsCriteria());
-        criterias.add(conf.getTimeCriteria());
-        criterias.add(conf.getStructureCriteria());
-
+        //Criterio de corte
+        this.cutCriteria = setupCutCriteria();
+        //Escritor a socket
         if(outputStream != null) writer = new PrintWriter(outputStream);
-        this.cutCriteria = prepareCutCriteria(criterias);
+        //Cargar la data del servicio
+        prepareEquipment();
     }
 
     private void prepareEquipment() {
@@ -102,17 +89,17 @@ public class Game {
         this.weapons = service.getData(Constants.Equipment.weapons);
         this.boots = service.getData(Constants.Equipment.boots);
 
-        Map<Integer, Equipment> helmets;
-        Map<Integer, Equipment> fronts;
-        Map<Integer, Equipment> gloves;
-        Map<Integer, Equipment> weapons;
-        Map<Integer, Equipment> boots;
+        Map<Integer, Equipment> helmets= this.helmets;
+        Map<Integer, Equipment> fronts = this.fronts;
+        Map<Integer, Equipment> gloves = this.gloves;
+        Map<Integer, Equipment> weapons= this.weapons;
+        Map<Integer, Equipment> boots = this.boots;
 
-        helmets = service.getData(Constants.Equipment.helmet);
-        fronts = service.getData(Constants.Equipment.front);
-        gloves = service.getData(Constants.Equipment.gloves);
-        weapons = service.getData(Constants.Equipment.weapons);
-        boots = service.getData(Constants.Equipment.boots);
+        //helmets = service.getData(Constants.Equipment.helmet);
+        //fronts = service.getData(Constants.Equipment.front);
+        //gloves = service.getData(Constants.Equipment.gloves);
+        //weapons = service.getData(Constants.Equipment.weapons);
+        //boots = service.getData(Constants.Equipment.boots);
 
         this.service.setBoots(boots);
         this.service.setFronts(fronts);
@@ -121,36 +108,20 @@ public class Game {
         this.service.setWeapons(weapons);
     }
 
-    private BaseCutCriteria prepareCutCriteria(List<BaseCutCriteria> criterias) {
-        return criterias.stream().filter(BaseCutCriteria::isInUse).findFirst().orElse(null);
-    }
-
-    private void mutate(Chromosome chromosome) {
-        double rand = ThreadLocalRandom.current().nextDouble(0, 1);
-        if (rand > this.mutation.getMutationProbability()) {
-            chromosome = mutation.mutate(chromosome);
-        }
-    }
-
     private void generateRandomPopulation() {
         List<BasePlayer> randomPopulation = new LinkedList<>();
-        int i = 0;
         BasePlayer playerAux;
         Random rand = new Random();
-        
-
-        while (i < this.poblationNumber) {
+        for(int i = 0; i < this.poblationNumber; i++) {
             playerAux = ClassesFactory.givePlayer(player.getName());
             playerAux.getEquipment().add(service.getFronts().get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(service.getHelmets().get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(service.getGloves().get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(service.getBoots().get(rand.nextInt(1000000)));
             playerAux.getEquipment().add(service.getWeapons().get(rand.nextInt(1000000)));
-
             playerAux.setHeight(ThreadLocalRandom.current().nextInt(130, 201));
-            playerAux.CalculateAll();
+            playerAux.calculateAll();
             randomPopulation.add(playerAux);
-            i++;
         }
         this.initialPopulation = randomPopulation;
     }
@@ -158,22 +129,47 @@ public class Game {
     public void run() {
         generateRandomPopulation();
         System.out.println("random population generated");
-        Generation generation = new Generation(initialPopulation,  service);
+        Generation generation = new Generation(initialPopulation, service);
         while (!this.cutCriteria.cutProgram(generation)) {
-            System.out.println("running generation" + generation.getGenerationNumber());
-            List<BasePlayer> newPopulation = fillMethod.fill(generation.getCurrentPopulation(), parentsSelection,
-                                                replacementSelection, service);
+            System.out.println("running generation " + generation.getGenerationNumber());
+            //generar la nueva generación
+            List<BasePlayer> newPopulation =
+                    fillMethod.fill(generation.getCurrentPopulation(), parentsSelection, replacementSelection);
+            //comparar resultados y asignar nueva generación
             generation.nextGeneration(newPopulation);
+            //imprimir al socket si resultado de la generación actual
             if(writer != null) {
                 writer.println(String.format(Locale.US, "%08.4f", generation.getCurrentFitness()));
                 writer.flush();
             }
         }
+        System.out.println("Mejor equipamiento: " + generation.getBestFitness().getChromosome().toString());
         //mandar señal al graficador de que terminamos
         if(writer != null) {
             writer.println(String.format(Locale.US, "%08.4f", -1.0));
             writer.flush();
         }
     }
+
+
+    public CombinedSelection setupSelection(SelectionMethod sel1, SelectionMethod sel2){
+        Selection parentSel1 = SelectionMethodFactory.giveSelection(sel1, this.generationNumber, sel1.getArg1(), sel1.getArg2());
+        Selection parentSel2 = SelectionMethodFactory.giveSelection(sel2, this.generationNumber, sel2.getArg1(), sel2.getArg2());
+        //setear la cantidad de individuos que debe agarrar cada método de selección
+        parentSel1.setK((int) (this.generationNumber * parentSel1.getPercentage()));
+        parentSel2.setK((int) (this.generationNumber * ( 1 - parentSel1.getPercentage())));
+        return new CombinedSelection(parentSel1, parentSel2);
+    }
+
+    public BaseCutCriteria setupCutCriteria(){
+        List<BaseCutCriteria> criterias = new LinkedList<>();
+        criterias.add(conf.getAcceptableSolutionCriteria());
+        criterias.add(conf.getContentCriteria());
+        criterias.add(conf.getNumberOfGenerationsCriteria());
+        criterias.add(conf.getTimeCriteria());
+        criterias.add(conf.getStructureCriteria());
+        return criterias.stream().filter(BaseCutCriteria::isInUse).findFirst().orElse(null);
+    }
+
 
 }

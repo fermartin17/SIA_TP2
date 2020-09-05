@@ -1,32 +1,25 @@
 {
    "fatherMethod_1":{
-      "percentage":0.0,
-      "name":"",
-      "boltzmanT0":0.0,
-      "boltzmanTC":0.0
+      "percentage":0.2,
+      "name":"eliteselection"
    },
    "fatherMethod_2":{
-      "percentage":0.0,
-      "name":"",
-      "boltzmanT0":0.0,
-      "boltzmanTC":0.0
+      "percentage":0.8,
+      "name":"deterministictournament",
+      "arg1": 25
    },
    "individualMethod_1":{
-      "percentage":0.0,
-      "name":"",
-      "boltzmanT0":0.0,
-      "boltzmanTC":0.0
+      "percentage":0.1,
+      "name":"eliteselection"
    },
    "individualMethod_2":{
-      "percentage":0.0,
-      "name":"",
-      "boltzmanT0":0.0,
-      "boltzmanTC":0.0
+      "percentage":0.9,
+      "name":"rouletteselection"
    },
-   "crossoverMethod":"",
+   "crossoverMethod":"twopointscrossover",
    "mutation":{
-      "name":"",
-      "probability":0.0
+      "name":"genmutation",
+      "probability":0.3
    },
    "acceptableSolutionCriteria":{
       "acceptableFitness":0.0,
@@ -39,8 +32,8 @@
       "inUse":false
    },
    "numberOfGenerationsCriteria":{
-      "maxCount":0,
-      "inUse":false
+      "maxCount":100,
+      "inUse": true
    },
    "structureCriteria":{
       "percentage":0.0,
@@ -52,7 +45,7 @@
       "maxTime":0.0,
       "inUse":false
    },
-   "poblation":0,
-   "generationNumber":0,
-   "individualClass":""
+   "poblation":500,
+   "generationNumber": 100,
+   "individualClass":"Warrior"
 }

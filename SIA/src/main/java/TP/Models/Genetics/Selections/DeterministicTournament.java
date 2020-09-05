@@ -9,10 +9,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DeterministicTournament extends Selection {
 
-    private static int M = 10; //TODO: ver esto
+    private int M;
 
-    public DeterministicTournament(int K, double percentage){
+    public DeterministicTournament(int K, double percentage, int M){
         super(K, percentage);
+        this.M = M;
     }
 
     @Override
@@ -31,7 +32,9 @@ public class DeterministicTournament extends Selection {
             candidatesId.forEach(c -> aux.add(population.get(c)));
             //agregar al mejor a la lista de retorno
             //noinspection OptionalGetWithoutIsPresent
-            ret.add(aux.stream().max(Comparator.comparing(BasePlayer::calculatePerformance)).get());
+            ret.add(aux.stream().max(Comparator.comparing(BasePlayer::getPerformance)).get());
+            //limpar la lista auxiliar
+            aux.clear();
         }
         return ret;
     }

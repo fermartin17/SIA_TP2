@@ -19,11 +19,13 @@ public class EliteSelection extends Selection {
     public List<BasePlayer> makeSelection(List<BasePlayer> population) {
         List<BasePlayer> copy = new ArrayList<>(population);
         //sort by performance
-        copy.sort(Comparator.comparing(BasePlayer::calculatePerformance));
+        copy.sort(Comparator.comparing(BasePlayer::getPerformance));
         Collections.reverse(copy);
         //return best K, loop if K > size of population
-        return IntStream.range(0, this.getK())
-                .mapToObj(i -> copy.get(i % copy.size()))
-                .collect(Collectors.toCollection(() -> new ArrayList<>(this.getK())));
+        List<BasePlayer> ret = new ArrayList<>(this.getK());
+        for(int i = 0; i < this.getK(); i++){
+            ret.add(copy.get(i % copy.size()));
+        }
+        return ret;
     }
 }
