@@ -16,7 +16,7 @@ public class Constants {
         public static final String ProbabilisticTournament = "probabilistictournament";
         public static final String RouletteSelection = "rouletteselection";
         public static final String UniversalSelection = "universalselection";
-        public static final String BoltzmannSelection = "boltzmannselection";
+        public static final String BoltzmanSelection = "boltzmanselection";
         public static final String RankingSelection = "rankingselection";
     }
 

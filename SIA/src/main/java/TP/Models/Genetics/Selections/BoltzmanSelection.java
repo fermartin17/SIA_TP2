@@ -5,17 +5,19 @@ import TP.Models.Player.BasePlayer;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BoltzmannSelection extends RouletteSelection {
+public class BoltzmanSelection extends RouletteSelection {
 
     private long generationNumber;
     private final double t0;
     private final double tC;
+    private final double boltzmanConstant;
 
-    public BoltzmannSelection(int K, double percentage,double t0, double tC) {
+    public BoltzmanSelection(int K, double percentage, double t0, double tC) {
         super(K, percentage);
         this.generationNumber = 0;
         this.t0 = t0;
         this.tC = tC;
+        this.boltzmanConstant = 1.38064852 * Math.pow(10,-23);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class BoltzmannSelection extends RouletteSelection {
     }
 
     private double getTemperature() {
-        return (this.tC + (this.t0 - tC) * Math.exp(-super.getK() * generationNumber));
+        return (this.tC + (this.t0 - tC) * Math.exp(-boltzmanConstant * generationNumber));
     }
 
 }
