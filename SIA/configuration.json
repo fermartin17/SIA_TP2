@@ -31,7 +31,7 @@
       "inUse":false
    },
    "numberOfGenerationsCriteria":{
-      "maxCount":3,
+      "maxCount":10,
       "inUse":true
    },
    "structureCriteria":{

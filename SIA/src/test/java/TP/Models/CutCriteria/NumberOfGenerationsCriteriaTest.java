@@ -19,10 +19,10 @@ public class NumberOfGenerationsCriteriaTest {
         Generation g = new Generation();
         Assert.assertFalse(cutCriteria.cutProgram(g));
         for(int i = 0; i < 4; i++){
-            g.nextGeneration();
+            g.nextGeneration(g.getCurrentPopulation());
             Assert.assertFalse(cutCriteria.cutProgram(g));
         }
-        g.nextGeneration();
+        g.nextGeneration(g.getCurrentPopulation());
         Assert.assertTrue(cutCriteria.cutProgram(g));
     }
 }

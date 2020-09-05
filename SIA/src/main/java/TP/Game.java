@@ -58,12 +58,22 @@ public class Game {
         service = new RedisService();
         prepareEquipment();
         this.poblationNumber = conf.getPoblation();
+        this.generationNumber = conf.getGenerationNumber();
         Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), this.generationNumber);
         Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), this.poblationNumber);
-        this.parentsSelection = new CombinedSelection(fatherMethod1, fatherMethod2);
+        fatherMethod1.setK((int) (this.generationNumber * fatherMethod1.getPercentage()));
+        fatherMethod2.setK((int) (this.generationNumber * ( 1 - fatherMethod1.getPercentage())));
 
         Selection replacementMethod1 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_1(), this.generationNumber);
-        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), this.poblationNumber);
+        Selection replacementMethod2 = SelectionMethodFactory.giveSelection(conf.getIndividualMethod_2(), this.generationNumber);
+
+        //setear la cantidad de individuos que debe agarrar cada método de selección
+        fatherMethod1.setK(     (int) (this.generationNumber *            fatherMethod1.getPercentage()));
+        fatherMethod2.setK(     (int) (this.generationNumber * ( 1 -      fatherMethod1.getPercentage())));
+        replacementMethod1.setK((int) (this.generationNumber *       replacementMethod1.getPercentage()));
+        replacementMethod2.setK((int) (this.generationNumber * ( 1 - replacementMethod1.getPercentage())));
+
+        this.parentsSelection = new CombinedSelection(fatherMethod1, fatherMethod2);
         this.replacementSelection = new CombinedSelection(replacementMethod1, replacementMethod2);
 
         this.fillMethod = new FillAll(CrossoverFactory.giveCrossover(conf.getCrossoverMethod()));
@@ -79,9 +89,7 @@ public class Game {
         criterias.add(conf.getTimeCriteria());
         criterias.add(conf.getStructureCriteria());
 
-        this.poblationNumber = conf.getPoblation();
         this.cutCriteria = prepareCutCriteria(criterias);
-        this.generationNumber = conf.getGenerationNumber();
     }
 
     private void prepareEquipment() {
@@ -135,11 +143,12 @@ public class Game {
     public void run() {
         generateRandomPopulation();
         System.out.println("random population generated");
-        Generation generation = new Generation(initialPopulation, fillMethod, service,
-                                                parentsSelection, replacementSelection);
+        Generation generation = new Generation(initialPopulation,  service);
         while (!this.cutCriteria.cutProgram(generation)) {
             System.out.println("running generation" + generation.getGenerationNumber());
-            generation.nextGeneration();
+            List<BasePlayer> newPopulation = fillMethod.fill(generation.getCurrentPopulation(), parentsSelection,
+                                                replacementSelection, service);
+            generation.nextGeneration(newPopulation);
         }
     }
 
