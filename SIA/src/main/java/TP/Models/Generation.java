@@ -68,7 +68,6 @@ public class Generation {
         @SuppressWarnings("OptionalGetWithoutIsPresent") BasePlayer aux = currentPopulation.stream()
                                     .max(Comparator.comparing(BasePlayer::calculatePerformance)).get();
         System.out.println("Current Generation Best Fitness: " + aux.getPerformance());
-
         this.currentFitness = aux.getPerformance();
         this.bestFitness =  bestFitness == null? aux : this.bestFitness.comparePerformance(aux);
     }
@@ -81,9 +80,8 @@ public class Generation {
         aux.getEquipment().add(service.getHelmets().get(chromosome.getChromosome()[3]));
         aux.getEquipment().add(service.getGloves().get(chromosome.getChromosome()[4]));
         aux.getEquipment().add(service.getFronts().get(chromosome.getChromosome()[5]));
-        aux.CalculateAll();
+        aux.calculateAll();
         aux.setChromosome(chromosome);
-
         return aux;
     }
 

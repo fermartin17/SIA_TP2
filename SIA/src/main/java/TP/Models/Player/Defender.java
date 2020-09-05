@@ -22,8 +22,8 @@ public class Defender extends BasePlayer {
     }
 
     @Override
-    public void CalculateAll() {
-        super.CalculateAll();
+    public void calculateAll() {
+        super.calculateAll();
         calculatePerformance();
     }
 }

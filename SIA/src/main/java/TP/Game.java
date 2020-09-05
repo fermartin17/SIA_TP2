@@ -18,11 +18,8 @@ import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Random;
@@ -58,12 +55,13 @@ public class Game {
     PrintWriter writer = null;
 
     public Game(ConfigurationFile conf, OutputStream outputStream) {
-
         this.conf = conf;
+
         service = new RedisService();
-        prepareEquipment();
+
         this.poblationNumber = conf.getPoblation();
         this.generationNumber = conf.getGenerationNumber();
+
         Selection fatherMethod1 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_1(), this.generationNumber,conf.getFatherMethod_1().getBoltzmanT0(),conf.getFatherMethod_1().getBoltzmanTC());
         Selection fatherMethod2 = SelectionMethodFactory.giveSelection(conf.getFatherMethod_2(), this.poblationNumber,conf.getFatherMethod_2().getBoltzmanT0(),conf.getFatherMethod_2().getBoltzmanTC());
         fatherMethod1.setK((int) (this.generationNumber * fatherMethod1.getPercentage()));
@@ -81,9 +79,9 @@ public class Game {
         this.parentsSelection = new CombinedSelection(fatherMethod1, fatherMethod2);
         this.replacementSelection = new CombinedSelection(replacementMethod1, replacementMethod2);
 
-        this.fillMethod = new FillAll(CrossoverFactory.giveCrossover(conf.getCrossoverMethod()));
         this.mutation = MutationFactory.giveMutation(conf.getMutation());
-
+        ICrossover crossover = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
+        this.fillMethod = new FillAll(crossover, mutation, service);
         this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
 
         List<BaseCutCriteria> criterias = new LinkedList<>();
@@ -96,6 +94,7 @@ public class Game {
 
         if(outputStream != null) writer = new PrintWriter(outputStream);
         this.cutCriteria = prepareCutCriteria(criterias);
+        prepareEquipment();
     }
 
     private void prepareEquipment() {
@@ -105,17 +104,17 @@ public class Game {
         this.weapons = service.getData(Constants.Equipment.weapons);
         this.boots = service.getData(Constants.Equipment.boots);
 
-        Map<Integer, Equipment> helmets;
-        Map<Integer, Equipment> fronts;
-        Map<Integer, Equipment> gloves;
-        Map<Integer, Equipment> weapons;
-        Map<Integer, Equipment> boots;
+        Map<Integer, Equipment> helmets= this.helmets;
+        Map<Integer, Equipment> fronts = this.fronts;
+        Map<Integer, Equipment> gloves = this.gloves;
+        Map<Integer, Equipment> weapons= this.weapons;
+        Map<Integer, Equipment> boots = this.boots;
 
-        helmets = service.getData(Constants.Equipment.helmet);
-        fronts = service.getData(Constants.Equipment.front);
-        gloves = service.getData(Constants.Equipment.gloves);
-        weapons = service.getData(Constants.Equipment.weapons);
-        boots = service.getData(Constants.Equipment.boots);
+        //helmets = service.getData(Constants.Equipment.helmet);
+        //fronts = service.getData(Constants.Equipment.front);
+        //gloves = service.getData(Constants.Equipment.gloves);
+        //weapons = service.getData(Constants.Equipment.weapons);
+        //boots = service.getData(Constants.Equipment.boots);
 
         this.service.setBoots(boots);
         this.service.setFronts(fronts);
@@ -126,13 +125,6 @@ public class Game {
 
     private BaseCutCriteria prepareCutCriteria(List<BaseCutCriteria> criterias) {
         return criterias.stream().filter(BaseCutCriteria::isInUse).findFirst().orElse(null);
-    }
-
-    private void mutate(Chromosome chromosome) {
-        double rand = ThreadLocalRandom.current().nextDouble(0, 1);
-        if (rand > this.mutation.getMutationProbability()) {
-            chromosome = mutation.mutate(chromosome);
-        }
     }
 
     private void generateRandomPopulation() {
@@ -151,7 +143,7 @@ public class Game {
             playerAux.getEquipment().add(service.getWeapons().get(rand.nextInt(1000000)));
 
             playerAux.setHeight(ThreadLocalRandom.current().nextInt(130, 201));
-            playerAux.CalculateAll();
+            playerAux.calculateAll();
             randomPopulation.add(playerAux);
             i++;
         }
@@ -161,11 +153,11 @@ public class Game {
     public void run() {
         generateRandomPopulation();
         System.out.println("random population generated");
-        Generation generation = new Generation(initialPopulation,  service);
+        Generation generation = new Generation(initialPopulation, service);
         while (!this.cutCriteria.cutProgram(generation)) {
-            System.out.println("running generation" + generation.getGenerationNumber());
-            List<BasePlayer> newPopulation = fillMethod.fill(generation.getCurrentPopulation(), parentsSelection,
-                                                replacementSelection, service);
+            System.out.println("running generation " + generation.getGenerationNumber());
+            List<BasePlayer> newPopulation =
+                    fillMethod.fill(generation.getCurrentPopulation(), parentsSelection, replacementSelection);
             generation.nextGeneration(newPopulation);
             if(writer != null) {
                 writer.println(String.format(Locale.US, "%08.4f", generation.getCurrentFitness()));

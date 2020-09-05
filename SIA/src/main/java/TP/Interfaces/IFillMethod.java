@@ -11,5 +11,5 @@ public interface IFillMethod {
 
     List<BasePlayer> fill(List<BasePlayer> parents,
                                 CombinedSelection parentSel,
-                                CombinedSelection offspringSel, IService service);
+                                CombinedSelection offspringSel);
 }

@@ -1,14 +1,18 @@
 package TP.Models.Player;
 
 import TP.Constants.Constants;
+import TP.Interfaces.IMutation;
 import TP.Models.Equipment;
 import TP.Models.Genetics.Chromosome;
+import TP.Models.Genetics.Mutations.Mutation;
+import TP.Services.RedisService;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Setter
 @Getter
@@ -111,7 +115,7 @@ public abstract class BasePlayer {
         return this.getPerformance() >= player.getPerformance() ? this : player;
     }
 
-    public void CalculateAll(){
+    public void calculateAll(){
         calculateATM();
         calculateDEM();
         calculateAgility();
@@ -128,4 +132,28 @@ public abstract class BasePlayer {
         this.chromosome.getChromosome()[4] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.gloves)).findFirst().orElse(null)).getId();
         this.chromosome.getChromosome()[5] = Objects.requireNonNull(this.equipment.stream().filter(x -> x.getName().equals(Constants.Equipment.front)).findFirst().orElse(null)).getId();
     }
+
+    public void mutate(Mutation mutation, RedisService service){
+        //llamamos a mutar al cromosoma
+        Chromosome maybeNewChromosome = mutation.mutate(chromosome);
+        //nos fijamos si el cromosoma mutó
+        if(chromosome.equals(maybeNewChromosome)) return;
+        //mutó, debemos cambiar los atributos
+        //limpiamos todos los equipamientos
+        this.equipment.clear();
+        //asignamos
+        this.chromosome = maybeNewChromosome;
+        //asignar armas
+        this.equipment.add(service.getWeapons().get(chromosome.getChromosome()[1]));
+        //asignar botas
+        this.equipment.add(service.getBoots().get(chromosome.getChromosome()[2]));
+        //asignar casco
+        this.equipment.add(service.getHelmets().get(chromosome.getChromosome()[3]));
+        //asignar guantes
+        this.equipment.add(service.getGloves().get(chromosome.getChromosome()[4]));
+        //asignar pecheras
+        this.equipment.add(service.getFronts().get(chromosome.getChromosome()[5]));
+        calculateAll();
+    }
+
 }

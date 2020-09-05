@@ -30,19 +30,19 @@ public class RouletteSelection extends Selection {
     }
 
     //calcular las aptitudes relativas
-    private List<Double> calculateRelativePerformance(List<BasePlayer> population, double totalSum){
+    public List<Double> calculateRelativePerformance(List<BasePlayer> population, double totalSum){
         return  population
                 .stream()
-                .map(p -> p.calculatePerformance() / totalSum)
+                .map(p -> p.getPerformance() / totalSum)
                 .collect(Collectors.toCollection(() -> new ArrayList<>(this.getK())));
     }
 
     //calcular las aptitudes relativas acumuladas
-    private List<Double> calculateAccumulatedList(List<Double> relatives){
-        List<Double> acum = new ArrayList<>(this.getK());
+    public List<Double> calculateAccumulatedList(List<Double> relatives){
+        List<Double> acum = new ArrayList<>(relatives.size());
         acum.add(relatives.get(0));
-        for(int i= 1; i < relatives.size() - 1; i++){
-            acum.add(relatives.get(i-1) + relatives.get(i));
+        for(int i= 1; i < relatives.size() ; i++){
+            acum.add(acum.get(i-1) + relatives.get(i));
         }
         return acum;
     }
@@ -53,19 +53,17 @@ public class RouletteSelection extends Selection {
         return ret;
     }
 
-    private List<BasePlayer> selectPopulation(List<Double> accumulated,
+    public List<BasePlayer> selectPopulation(List<Double> accumulated,
                                               List<Double> randoms, List<BasePlayer> population){
-        List<BasePlayer> ret = new ArrayList<>(randoms.size());
+        List<BasePlayer> ret = new ArrayList<>(getK());
         boolean found;
-        for (double r : randoms) {
+        for(int i = 0; i < getK(); i++){
+            double r = randoms.get(i);
             found = false;
-            //noinspection UnclearExpression,ConstantConditions
-            for (int j = 0; !found && j < accumulated.size() - 1; j++) {
-                if (accumulated.get(j) < r && r <= accumulated.get(j + 1)) {
-                    ret.add(population.get(j + 1));
-                    //noinspection UnusedAssignment
+            for (int j = 0; !found && j < accumulated.size(); j++) {
+                if(r <= accumulated.get(j)){
+                    ret.add(population.get(j));
                     found = true;
-                    break;
                 }
             }
         }
