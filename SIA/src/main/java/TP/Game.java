@@ -18,11 +18,12 @@ import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.Random;
 
 public class Game {
 
@@ -52,7 +53,9 @@ public class Game {
 
     private int generationNumber;
 
-    public Game(ConfigurationFile conf) {
+    PrintWriter writer = null;
+
+    public Game(ConfigurationFile conf, OutputStream outputStream) {
 
         this.conf = conf;
         service = new RedisService();
@@ -89,6 +92,7 @@ public class Game {
         criterias.add(conf.getTimeCriteria());
         criterias.add(conf.getStructureCriteria());
 
+        if(outputStream != null) writer = new PrintWriter(outputStream);
         this.cutCriteria = prepareCutCriteria(criterias);
     }
 
@@ -122,7 +126,7 @@ public class Game {
         int i = 0;
         BasePlayer playerAux;
         Random rand = new Random();
-        int floorHeight = 130;
+        //int floorHeight = 130;
 
         while (i < this.poblationNumber) {
             playerAux = ClassesFactory.givePlayer(player.getName());
@@ -149,7 +153,14 @@ public class Game {
             List<BasePlayer> newPopulation = fillMethod.fill(generation.getCurrentPopulation(), parentsSelection,
                                                 replacementSelection, service);
             generation.nextGeneration(newPopulation);
+            if(writer != null) {
+                writer.println(String.format(Locale.US, "%.4f", generation.getCurrentFitness()));
+                writer.flush();
+            }
         }
+        //mandar señal al graficador de que terminamos
+        writer.println(String.format(Locale.US, "%.4f", -1.000));
+        writer.flush();
     }
 
 }

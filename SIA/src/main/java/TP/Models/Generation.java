@@ -1,21 +1,18 @@
 package TP.Models;
 
-import TP.Constants.Constants;
 import TP.Helpers.Factories.ClassesFactory;
 import TP.Interfaces.ICrossover;
-import TP.Interfaces.IFillMethod;
 import TP.Interfaces.IService;
 import TP.Models.Genetics.Chromosome;
-import TP.Models.Genetics.Selections.CombinedSelection;
 import TP.Models.Player.BasePlayer;
 import TP.Services.RedisService;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.lang.reflect.Constructor;
+
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -26,7 +23,6 @@ public class Generation {
     private BasePlayer bestFitness;
     private double currentFitness;
     private int generationNumber;
-    public double lastGenerationPerformance;
     private IService redisService;
 
 
@@ -35,7 +31,6 @@ public class Generation {
         this.currentPopulation = new ArrayList<>();
         this.bestFitness = null;
         this.generationNumber = 0;
-        this.lastGenerationPerformance = 0;
         this.redisService = null;
     }
 
@@ -44,7 +39,6 @@ public class Generation {
         this.currentPopulation = currentPopulation;
         this.bestFitness = null;
         this.generationNumber = 0;
-        this.lastGenerationPerformance = 0;
         this.redisService = redisService;
     }
 
@@ -72,9 +66,11 @@ public class Generation {
     }
 
     private void compareBestFitness(){
-        BasePlayer aux = currentPopulation.stream().max(Comparator.comparing(BasePlayer::calculatePerformance)).get();
+        @SuppressWarnings("OptionalGetWithoutIsPresent") BasePlayer aux = currentPopulation.stream()
+                                    .max(Comparator.comparing(BasePlayer::calculatePerformance)).get();
         System.out.println("Current Generation Best Fitness: " + aux.getPerformance());
-        this.lastGenerationPerformance = aux.getPerformance();
+
+        this.currentFitness = aux.getPerformance();
         this.bestFitness =  bestFitness == null? aux : this.bestFitness.comparePerformance(aux);
     }
 
