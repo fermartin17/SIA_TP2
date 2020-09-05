@@ -18,11 +18,8 @@ import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Random;
