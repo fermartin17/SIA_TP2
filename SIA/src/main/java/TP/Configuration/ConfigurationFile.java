@@ -12,18 +12,10 @@ public class ConfigurationFile {
     private SelectionMethod fatherMethod_2;
     private SelectionMethod individualMethod_1;
     private SelectionMethod individualMethod_2;
-
     private String crossoverMethod;
-
     private MutationConfiguration mutation;
-
-    private AcceptableSolutionCriteria acceptableSolutionCriteria;
-    private ContentCriteria contentCriteria;
-    private NumberOfGenerationsCriteria numberOfGenerationsCriteria;
-    private StructureCriteria structureCriteria;
-    private TimeCriteria timeCriteria;
-
-    private int poblation;
+    private CutCriteriaMethod criteria;
+    private int population;
     private int generationNumber;
     private String individualClass;
 
@@ -33,11 +25,7 @@ public class ConfigurationFile {
         this.individualMethod_1 = new SelectionMethod();
         this.individualMethod_2 = new SelectionMethod();
         this.mutation = new MutationConfiguration();
-        this.acceptableSolutionCriteria = new AcceptableSolutionCriteria();
-        this.contentCriteria = new ContentCriteria();
-        this.numberOfGenerationsCriteria = new NumberOfGenerationsCriteria();
-        this.structureCriteria = new StructureCriteria();
-        this.timeCriteria = new TimeCriteria();
+        this.criteria = new CutCriteriaMethod();
         this.individualClass = "";
         this.crossoverMethod = "";
     }

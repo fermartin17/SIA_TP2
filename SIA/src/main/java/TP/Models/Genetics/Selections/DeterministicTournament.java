@@ -1,6 +1,8 @@
 package TP.Models.Genetics.Selections;
 
 import TP.Models.Player.BasePlayer;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,6 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DeterministicTournament extends Selection {
 
+    @Getter
+    @Setter
     private int M;
 
     public DeterministicTournament(int K, double percentage, int M){

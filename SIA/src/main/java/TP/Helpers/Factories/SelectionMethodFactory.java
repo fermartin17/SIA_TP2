@@ -14,7 +14,7 @@ public class SelectionMethodFactory {
             case Constants.Selection.EliteSelection:
                 return new EliteSelection(populationQuantity, method.getPercentage());
             case Constants.Selection.ProbabilisticTournament:
-                return new ProbabilisticTournament(populationQuantity, method.getPercentage());
+                return new ProbabilisticTournament(populationQuantity, method.getPercentage(), arg1);
             case Constants.Selection.RouletteSelection:
                 return new RouletteSelection(populationQuantity, method.getPercentage());
             case Constants.Selection.UniversalSelection:

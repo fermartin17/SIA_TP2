@@ -8,10 +8,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ProbabilisticTournament extends Selection {
 
-    private static double threshold = 0.75; //TODO: ver esto
+    private double threshold;
 
-    public ProbabilisticTournament(int K, double percentage){
+    public ProbabilisticTournament(int K, double percentage, double threshold){
         super(K, percentage);
+        this.threshold = threshold;
     }
 
     @Override
@@ -30,12 +31,12 @@ public class ProbabilisticTournament extends Selection {
                 aux[0] = aux[1];
                 aux[1] = temp;
             }
-            //if above threshold, add most fit
+            //if above threshold, add less fit
             boolean aboveThreshold = ThreadLocalRandom.current().nextDouble() > threshold;
             if(aboveThreshold){
-                ret.add(aux[0]);
-            }else{
                 ret.add(aux[1]);
+            }else{
+                ret.add(aux[0]);
             }
         }
         return ret;

@@ -1,12 +1,10 @@
 package TP;
 
 import TP.Configuration.ConfigurationFile;
+import TP.Configuration.CutCriteriaMethod;
 import TP.Configuration.SelectionMethod;
 import TP.Constants.Constants;
-import TP.Helpers.Factories.ClassesFactory;
-import TP.Helpers.Factories.CrossoverFactory;
-import TP.Helpers.Factories.MutationFactory;
-import TP.Helpers.Factories.SelectionMethodFactory;
+import TP.Helpers.Factories.*;
 import TP.Interfaces.*;
 import TP.Models.CutCriteria.BaseCutCriteria;
 import TP.Models.FillAll;
@@ -59,7 +57,7 @@ public class Game {
         this.conf = conf;
         service = new RedisService();
         //N
-        this.poblationNumber = conf.getPoblation();
+        this.poblationNumber = conf.getPopulation();
         //K
         this.generationNumber = conf.getGenerationNumber();
         //Métodos de selección 1 y 2
@@ -153,8 +151,10 @@ public class Game {
 
 
     public CombinedSelection setupSelection(SelectionMethod sel1, SelectionMethod sel2){
-        Selection parentSel1 = SelectionMethodFactory.giveSelection(sel1, this.generationNumber, sel1.getArg1(), sel1.getArg2());
-        Selection parentSel2 = SelectionMethodFactory.giveSelection(sel2, this.generationNumber, sel2.getArg1(), sel2.getArg2());
+        Selection parentSel1 = SelectionMethodFactory.giveSelection(sel1, this.generationNumber,
+                sel1.getArg1(), sel1.getArg2());
+        Selection parentSel2 = SelectionMethodFactory.giveSelection(sel2, this.generationNumber,
+                sel2.getArg1(), sel2.getArg2());
         //setear la cantidad de individuos que debe agarrar cada método de selección
         parentSel1.setK((int) (this.generationNumber * parentSel1.getPercentage()));
         parentSel2.setK((int) (this.generationNumber * ( 1 - parentSel1.getPercentage())));
@@ -162,13 +162,8 @@ public class Game {
     }
 
     public BaseCutCriteria setupCutCriteria(){
-        List<BaseCutCriteria> criterias = new LinkedList<>();
-        criterias.add(conf.getAcceptableSolutionCriteria());
-        criterias.add(conf.getContentCriteria());
-        criterias.add(conf.getNumberOfGenerationsCriteria());
-        criterias.add(conf.getTimeCriteria());
-        criterias.add(conf.getStructureCriteria());
-        return criterias.stream().filter(BaseCutCriteria::isInUse).findFirst().orElse(null);
+        CutCriteriaMethod criteriaMethod = conf.getCriteria();
+        return CutCriteriaFactory.giveCriteria(criteriaMethod);
     }
 
 

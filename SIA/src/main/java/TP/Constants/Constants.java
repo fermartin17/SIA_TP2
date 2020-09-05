@@ -40,4 +40,12 @@ public class Constants {
         public static final String Defender = "defender";
         public static final String Infiltrate = "infiltrate";
     }
+
+    public static class Criteria{
+        public static final String AcceptableSolutionCriteria = "acceptablesolution";
+        public static final String ContentCriteria = "contentcriteria";
+        public static final String NumberOfGenerationsCriteria  = "numberofgenerations";
+        public static final String StructureCriteria = "structure";
+        public static final String TimeCriteria = "time";
+    }
 }
