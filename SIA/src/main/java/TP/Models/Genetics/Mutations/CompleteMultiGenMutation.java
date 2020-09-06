@@ -19,7 +19,8 @@ public class CompleteMultiGenMutation extends LimitedMultiGenMutation {
         if(ThreadLocalRandom.current().nextDouble() < getMutationProbability()) return c;
         //se debe mutar
         //generamos una lista de 0 hasta S y se la pasamos para que mute todos los genes
-        return mutateCandidates(c, (Integer[]) Collections
-                .singletonList(IntStream.range(0, Chromosome.S + 1)).toArray());
+        Integer[] aux = new Integer[Chromosome.S];
+        for(int i = 0; i < aux.length; i++) aux[i] = i;
+        return mutateCandidates(c, aux);
     }
 }
