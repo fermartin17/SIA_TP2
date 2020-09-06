@@ -1,31 +1,58 @@
 {
    "fatherMethod_1":{
-      "percentage":0.4,
-      "name":"eliteselection"
+      "percentage":0.0,
+      "name":"",
+      "arg1":0.0,
+      "arg2":0.0
    },
    "fatherMethod_2":{
-      "percentage":0.6,
-      "name":"deterministictournament",
-      "arg1": 40
+      "percentage":0.0,
+      "name":"",
+      "arg1":0.0,
+      "arg2":0.0
    },
    "individualMethod_1":{
-      "percentage":0.3,
-      "name":"eliteselection"
+      "percentage":0.0,
+      "name":"",
+      "arg1":0.0,
+      "arg2":0.0
    },
    "individualMethod_2":{
-      "percentage":0.7,
-      "name":"rouletteselection"
+      "percentage":0.0,
+      "name":"",
+      "arg1":0.0,
+      "arg2":0.0
    },
-   "crossoverMethod":"onepointcrossover",
+   "crossoverMethod":"",
    "mutation":{
-      "name":"genmutation",
-      "probability":0.4
+      "name":"",
+      "probability":0.0
    },
-   "criteria": {
-      "name": "acceptablesolution",
-      "arg1": 41
+   "acceptableSolutionCriteria":{
+      "acceptableFitness":0.0,
+      "inUse":false
    },
-   "population": 500,
-   "generationNumber": 200,
-   "individualClass":"Warrior"
+   "contentCriteria":{
+      "maxHits":0,
+      "precision":0.0,
+      "currentHits":0,
+      "inUse":false
+   },
+   "numberOfGenerationsCriteria":{
+      "maxCount":0,
+      "inUse":false
+   },
+   "structureCriteria":{
+      "percentage":0.0,
+      "generationsWindow":0,
+      "inUse":false
+   },
+   "timeCriteria":{
+      "startTime":0.0,
+      "maxTime":0.0,
+      "inUse":false
+   },
+   "poblation":0,
+   "generationNumber":0,
+   "individualClass":""
 }
