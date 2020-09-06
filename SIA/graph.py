@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import time
-import threading
 import socket
 import struct
-from ast import literal_eval
 
 host = "localhost"
 port = 4444

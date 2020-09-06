@@ -18,6 +18,7 @@ public class AcceptableSolutionCriteria extends BaseCutCriteria{
 
     @Override
     public boolean cutProgram(Generation g) {
-        return g.getBestFitness().getPerformance() >= acceptableFitness;
+        return g.getBestFitness() != null &&
+               g.getBestFitness().getPerformance() >= acceptableFitness;
     }
 }

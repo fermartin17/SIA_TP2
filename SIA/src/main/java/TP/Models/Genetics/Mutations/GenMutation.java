@@ -28,7 +28,7 @@ public class GenMutation extends Mutation {
             lowerBound = 130;
         }
         //cambiarlo por otro valor entre
-        ret.getChromosome()[r] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound +1);
+        ret.getChromosome()[r] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound);
         return ret;
     }
 }

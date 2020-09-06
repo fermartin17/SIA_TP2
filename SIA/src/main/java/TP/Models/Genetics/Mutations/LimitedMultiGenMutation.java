@@ -44,14 +44,14 @@ public class LimitedMultiGenMutation extends Mutation {
         for(Integer i : candidatesToMutation){
             //si vamos a tocar el gen de altura, modificar los límites
             if(i == 0){
-                upperBound = 200;
+                upperBound = 201;
                 lowerBound = 130;
             }else{
                 upperBound = 1000000;
                 lowerBound = 0;
             }
             //cambiarlo por otro valor entre
-            chromosome.getChromosome()[i] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound +1);
+            chromosome.getChromosome()[i] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound);
         }
         return chromosome;
     }

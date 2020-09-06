@@ -9,6 +9,7 @@ public class UniversalSelection extends RouletteSelection {
     public  UniversalSelection (int K, double percentage){
         super(K, percentage);
     }
+
     @Override
     public List<Double> generateRandoms() {
         List<Double> ret = new ArrayList<>(this.getK());
