@@ -22,8 +22,8 @@
       "probability":0.4
    },
    "criteria": {
-      "name": "acceptablesolution",
-      "arg1": 41
+      "name": "numberofgenerations",
+      "arg1": 20
    },
    "population": 500,
    "generationNumber": 200,
