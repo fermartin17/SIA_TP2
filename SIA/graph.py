@@ -24,7 +24,7 @@ if __name__ == '__main__':
     plt.xlabel("generacion")
     plt.ylabel("performance")
     while incoming_data:
-        plt.pause(0.001)
+        plt.pause(0.0001)
         print("waiting for data")
         new_data = conn.recv(9)[:-1]
         if new_data != b'':

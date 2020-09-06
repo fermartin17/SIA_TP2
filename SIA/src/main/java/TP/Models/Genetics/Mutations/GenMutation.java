@@ -24,8 +24,11 @@ public class GenMutation extends Mutation {
         int lowerBound = 0;
         //si vamos a tocar el gen de altura, modificar los límites
         if(r == 0){
-            upperBound = 200;
-            lowerBound = 130;
+            //buscamos aleatoriamente dentro de un rango cercano al gen original
+            upperBound = c.getChromosome()[0] + 20;
+            if(upperBound > 200) upperBound = 200;
+            lowerBound = c.getChromosome()[0] - 20;
+            if(lowerBound < 130) lowerBound = 130;
         }
         //cambiarlo por otro valor entre
         ret.getChromosome()[r] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound);
