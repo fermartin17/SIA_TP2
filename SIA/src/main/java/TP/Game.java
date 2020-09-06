@@ -69,7 +69,7 @@ public class Game {
         //Método de cruza
         ICrossover crossover = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
         //Método de implementación
-        this.fillMethod = new FillAll(crossover, mutation, service);
+        this.fillMethod = FillMethodFactory.giveMethod(conf.getFillMethod(), crossover, mutation, service);
         //Tipo de player
         this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
         //Criterio de corte

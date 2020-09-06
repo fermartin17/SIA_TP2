@@ -48,4 +48,9 @@ public class Constants {
         public static final String StructureCriteria = "structure";
         public static final String TimeCriteria = "time";
     }
+
+    public static class FillMethod{
+        public static final String FillAll = "fillall";
+        public static final String FillParent = "fillparent";
+    }
 }

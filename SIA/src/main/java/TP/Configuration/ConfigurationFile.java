@@ -15,6 +15,7 @@ public class ConfigurationFile {
     private String crossoverMethod;
     private MutationConfiguration mutation;
     private CutCriteriaMethod criteria;
+    private String fillMethod;
     private int population;
     private int generationNumber;
     private String individualClass;
@@ -26,6 +27,7 @@ public class ConfigurationFile {
         this.individualMethod_2 = new SelectionMethod();
         this.mutation = new MutationConfiguration();
         this.criteria = new CutCriteriaMethod();
+        this.fillMethod = "";
         this.individualClass = "";
         this.crossoverMethod = "";
     }

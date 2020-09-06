@@ -23,8 +23,9 @@
    },
    "criteria": {
       "name": "numberofgenerations",
-      "arg1": 20
+      "arg1": 200
    },
+   "fillMethod" : "fillparent",
    "population": 500,
    "generationNumber": 200,
    "individualClass":"Warrior"
