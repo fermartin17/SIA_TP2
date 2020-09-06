@@ -5,9 +5,10 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Locale;
 
 public class App {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
         boolean writeToGraph = true;
 
@@ -28,8 +29,14 @@ public class App {
         }
 
         File file = new File("configuration.json");
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(file));
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
         Gson gson = new Gson();
+        assert bufferedReader != null;
         ConfigurationFile conf = gson.fromJson(bufferedReader, ConfigurationFile.class);
         System.out.println("configuration loaded");
         Game game = new Game(conf, outputStream);
@@ -48,8 +55,6 @@ public class App {
 
         //Gson gson = new Gson();
         //System.out.println(gson.toJson(new ConfigurationFile()));
-
-
 
     }
 }
