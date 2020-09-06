@@ -1,31 +1,31 @@
 {
    "fatherMethod_1":{
-      "percentage":0.2,
+      "percentage":0.4,
       "name":"eliteselection"
    },
    "fatherMethod_2":{
-      "percentage":0.8,
+      "percentage":0.6,
       "name":"deterministictournament",
-      "arg1": 25
+      "arg1": 40
    },
    "individualMethod_1":{
-      "percentage":0.1,
+      "percentage":0.3,
       "name":"eliteselection"
    },
    "individualMethod_2":{
-      "percentage":0.9,
+      "percentage":0.7,
       "name":"rouletteselection"
    },
-   "crossoverMethod":"twopointscrossover",
+   "crossoverMethod":"onepointcrossover",
    "mutation":{
       "name":"genmutation",
-      "probability":0.3
+      "probability":0.4
    },
    "criteria": {
-      "name": "numberofgenerations",
-      "arg1": 100
+      "name": "acceptablesolution",
+      "arg1": 41
    },
-   "population":500,
-   "generationNumber": 100,
+   "population": 500,
+   "generationNumber": 200,
    "individualClass":"Warrior"
 }

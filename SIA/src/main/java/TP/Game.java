@@ -149,7 +149,6 @@ public class Game {
         }
     }
 
-
     public CombinedSelection setupSelection(SelectionMethod sel1, SelectionMethod sel2){
         Selection parentSel1 = SelectionMethodFactory.giveSelection(sel1, this.generationNumber,
                 sel1.getArg1(), sel1.getArg2());
@@ -165,6 +164,5 @@ public class Game {
         CutCriteriaMethod criteriaMethod = conf.getCriteria();
         return CutCriteriaFactory.giveCriteria(criteriaMethod);
     }
-
 
 }
