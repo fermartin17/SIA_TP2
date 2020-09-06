@@ -32,7 +32,7 @@ public class LimitedMultiGenMutation extends Mutation {
         Integer[] candidatesToMutation = new Integer[nOfMutations];
         //definir los genes candidatos
         for(int i = 0; i < candidatesToMutation.length; i++){
-            candidatesToMutation[i] = ThreadLocalRandom.current().nextInt(0, Chromosome.S +1);
+            candidatesToMutation[i] = ThreadLocalRandom.current().nextInt(0, c.getS() +1);
         }
         return mutateCandidates(ret, candidatesToMutation);
     }

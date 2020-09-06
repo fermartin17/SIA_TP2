@@ -10,7 +10,7 @@ public class UniformCrossOver implements ICrossover {
     @Override
     public Chromosome[] cross(Chromosome p1, Chromosome p2) {
         if(p1 == null || p2 == null) return null;
-        Boolean[] randoms = new Boolean[Chromosome.S];
+        Boolean[] randoms = new Boolean[p1.getS()];
         for(int i = 0; i < randoms.length; i++) randoms[i] = ThreadLocalRandom.current().nextBoolean();
         return cross(p1, p2, randoms);
     }
@@ -22,7 +22,7 @@ public class UniformCrossOver implements ICrossover {
         Chromosome[] children = new Chromosome[] {new Chromosome(), new Chromosome()};
         //child0 always copies from aux1, child1 always copies from aux2
         //if random is true, aux1 = p1, aux2 = p2; else, swap aux1 and aux2
-        for(int i = 0; i < Chromosome.S; i++){
+        for(int i = 0; i < p1.getS(); i++){
             Chromosome aux1, aux2;
             if(randoms[i]){
                 aux1 = p1;

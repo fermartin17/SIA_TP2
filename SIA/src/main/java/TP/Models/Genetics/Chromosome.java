@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Chromosome {
 
-    public static final int S = 6;
+    public final int S = 6;
     private int[] chromosome;
 
     public Chromosome(){

@@ -14,7 +14,7 @@ public class UniformMultiGenMutation extends LimitedMultiGenMutation {
     public Chromosome mutate(Chromosome c) {
         //loopeamos cada gen del cromosomas para ver si se muta o no
         Chromosome aux = new Chromosome(c);
-        for(int i = 0; i < Chromosome.S; i++){
+        for(int i = 0; i < c.getS(); i++){
             if(ThreadLocalRandom.current().nextDouble() >= getMutationProbability()){
                 aux = mutateCandidates(aux, new Integer[]{i});
             }

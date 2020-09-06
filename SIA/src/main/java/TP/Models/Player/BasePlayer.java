@@ -36,7 +36,7 @@ public abstract class BasePlayer {
     //constructor default
     public BasePlayer(){
         this.name = "";
-        this.equipment = new ArrayList<>(Chromosome.S -1);
+        this.equipment = new ArrayList<>();
         this.chromosome = new Chromosome();
         this.atm = dem = height = 0;
         this.attack = defense = performance = 0;
@@ -46,7 +46,7 @@ public abstract class BasePlayer {
 
     public BasePlayer(String name){
         this.name = name;
-        this.equipment = new ArrayList<>(Chromosome.S -1);
+        this.equipment = new ArrayList<>();
         this.chromosome = new Chromosome();
         this.atm = dem = height = 0;
         this.attack = defense = performance = 0;

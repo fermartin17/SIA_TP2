@@ -17,7 +17,7 @@ public class GenMutation extends Mutation {
         //se debe mutar
         Chromosome ret = new Chromosome(c);
         //elegir un gen al azar
-        int r = ThreadLocalRandom.current().nextInt(0, Chromosome.S);
+        int r = ThreadLocalRandom.current().nextInt(0, c.getS());
         //el gen de altura puede ir desde 130 hasta 200 cm
         //los genes de items pueden ir desde 0 hasta 1.000.000
         int upperBound = 1000000;

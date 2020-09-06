@@ -13,8 +13,8 @@ import java.util.Locale;
 public class App {
     public static void main(String[] args) {
 
-        boolean multipleRuns = true;
-        boolean writeToGraph = false;
+        boolean multipleRuns = false;
+        boolean writeToGraph = true;
 
         //CSVImportHelper csvImportHelper = new CSVImportHelper();
         //csvImportHelper.setData();
@@ -52,9 +52,10 @@ public class App {
             System.out.println("game created");
             game.run();
 
+            //noinspection ConstantConditions
             if (writeToGraph) {
                 try {
-                    socket.close();
+                    if(socket != null) socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

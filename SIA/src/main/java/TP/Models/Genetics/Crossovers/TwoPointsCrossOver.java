@@ -10,7 +10,7 @@ public class TwoPointsCrossOver implements ICrossover {
     @Override
     public Chromosome[] cross(Chromosome p1, Chromosome p2) {
         //get 2 random int between [0, S], r2 must be > r1 -> r2 [0, S], r1[0,r1]
-        int r2 = ThreadLocalRandom.current().nextInt(0, Chromosome.S + 1);
+        int r2 = ThreadLocalRandom.current().nextInt(0, p1.getS() + 1);
         int r1 = ThreadLocalRandom.current().nextInt(0, r2 + 1);
         return cross(p1, p2, r1, r2);
     }
