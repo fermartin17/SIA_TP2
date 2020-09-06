@@ -16,6 +16,7 @@ import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.*;
@@ -117,6 +118,8 @@ public class Game {
                 writer.println(String.format(Locale.US, "%08.4f", -1.0));
                 writer.flush();
             }
+            try { outputStreams.get(i).close(); }
+            catch (IOException e){ e.printStackTrace(); }
         }
     }
 
