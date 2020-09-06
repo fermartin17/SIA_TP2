@@ -24,7 +24,8 @@ import java.util.Random;
 
 public class Game {
 
-    private ConfigurationFile conf;
+    private List<ConfigurationFile> confs;
+    private List<OutputStream> outputStreams;
     private RedisService service;
 
     private Map<Integer, Equipment> helmets;
@@ -50,34 +51,14 @@ public class Game {
 
     private int generationNumber;
 
-    PrintWriter writer = null;
+    PrintWriter writer;
 
-
-    public Game(ConfigurationFile conf, OutputStream outputStream) {
-        this.conf = conf;
+    public Game(List<ConfigurationFile> configs, List<OutputStream> outputStreams){
+        this.confs = configs;
         service = new RedisService();
-        //N
-        this.poblationNumber = conf.getPopulation();
-        //K
-        this.generationNumber = conf.getGenerationNumber();
-        //Métodos de selección 1 y 2
-        this.parentsSelection = setupSelection(conf.getFatherMethod_1(), conf.getFatherMethod_2());
-        //Métodos de selección 3 y 4
-        this.replacementSelection = setupSelection(conf.getIndividualMethod_1(), conf.getIndividualMethod_2());
-        //Mutación
-        this.mutation = MutationFactory.giveMutation(conf.getMutation());
-        //Método de cruza
-        ICrossover crossover = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
-        //Método de implementación
-        this.fillMethod = FillMethodFactory.giveMethod(conf.getFillMethod(), crossover, mutation, service);
-        //Tipo de player
-        this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
-        //Criterio de corte
-        this.cutCriteria = setupCutCriteria();
-        //Escritor a socket
-        if(outputStream != null) writer = new PrintWriter(outputStream);
-        //Cargar la data del servicio
-        prepareEquipment();
+        this.outputStreams = outputStreams;
+        //Cargar la data del servicio de db
+        this.prepareEquipment();
     }
 
     private void prepareEquipment() {
@@ -86,19 +67,6 @@ public class Game {
         this.gloves = service.getData(Constants.Equipment.gloves);
         this.weapons = service.getData(Constants.Equipment.weapons);
         this.boots = service.getData(Constants.Equipment.boots);
-
-        Map<Integer, Equipment> helmets= this.helmets;
-        Map<Integer, Equipment> fronts = this.fronts;
-        Map<Integer, Equipment> gloves = this.gloves;
-        Map<Integer, Equipment> weapons= this.weapons;
-        Map<Integer, Equipment> boots = this.boots;
-
-        //helmets = service.getData(Constants.Equipment.helmet);
-        //fronts = service.getData(Constants.Equipment.front);
-        //gloves = service.getData(Constants.Equipment.gloves);
-        //weapons = service.getData(Constants.Equipment.weapons);
-        //boots = service.getData(Constants.Equipment.boots);
-
         this.service.setBoots(boots);
         this.service.setFronts(fronts);
         this.service.setGloves(gloves);
@@ -125,27 +93,30 @@ public class Game {
     }
 
     public void run() {
-        generateRandomPopulation();
-        System.out.println("random population generated");
-        Generation generation = new Generation(initialPopulation, service);
-        while (!this.cutCriteria.cutProgram(generation)) {
-            System.out.println("running generation " + generation.getGenerationNumber());
-            //generar la nueva generación
-            List<BasePlayer> newPopulation =
-                    fillMethod.fill(generation.getCurrentPopulation(), parentsSelection, replacementSelection);
-            //comparar resultados y asignar nueva generación
-            generation.nextGeneration(newPopulation);
-            //imprimir al socket si resultado de la generación actual
-            if(writer != null) {
-                writer.println(String.format(Locale.US, "%08.4f", generation.getCurrentFitness()));
+        for(int i = 0; i < confs.size(); i++){
+            setupConfiguration(i);
+            generateRandomPopulation();
+            System.out.println("random population generated");
+            Generation generation = new Generation(initialPopulation, service);
+            while (!this.cutCriteria.cutProgram(generation)) {
+                System.out.println("running generation " + generation.getGenerationNumber());
+                //generar la nueva generación
+                List<BasePlayer> newPopulation =
+                        fillMethod.fill(generation.getCurrentPopulation(), parentsSelection, replacementSelection);
+                //comparar resultados y asignar nueva generación
+                generation.nextGeneration(newPopulation);
+                //imprimir al socket si resultado de la generación actual
+                if (writer != null) {
+                    writer.println(String.format(Locale.US, "%08.4f", generation.getCurrentFitness()));
+                    writer.flush();
+                }
+            }
+            System.out.println("Mejor equipamiento: " + generation.getBestFitness().getChromosome().toString());
+            //mandar señal al graficador de que terminamos
+            if (writer != null) {
+                writer.println(String.format(Locale.US, "%08.4f", -1.0));
                 writer.flush();
             }
-        }
-        System.out.println("Mejor equipamiento: " + generation.getBestFitness().getChromosome().toString());
-        //mandar señal al graficador de que terminamos
-        if(writer != null) {
-            writer.println(String.format(Locale.US, "%08.4f", -1.0));
-            writer.flush();
         }
     }
 
@@ -160,9 +131,33 @@ public class Game {
         return new CombinedSelection(parentSel1, parentSel2);
     }
 
-    public BaseCutCriteria setupCutCriteria(){
+    public BaseCutCriteria setupCutCriteria(ConfigurationFile conf){
         CutCriteriaMethod criteriaMethod = conf.getCriteria();
         return CutCriteriaFactory.giveCriteria(criteriaMethod);
+    }
+
+    public void setupConfiguration(int index){
+        ConfigurationFile conf = this.confs.get(index);
+        //N
+        this.poblationNumber = conf.getPopulation();
+        //K
+        this.generationNumber = conf.getGenerationNumber();
+        //Métodos de selección 1 y 2
+        this.parentsSelection = setupSelection(conf.getFatherMethod_1(), conf.getFatherMethod_2());
+        //Métodos de selección 3 y 4
+        this.replacementSelection = setupSelection(conf.getIndividualMethod_1(), conf.getIndividualMethod_2());
+        //Mutación
+        this.mutation = MutationFactory.giveMutation(conf.getMutation());
+        //Método de cruza
+        ICrossover crossover = CrossoverFactory.giveCrossover(conf.getCrossoverMethod());
+        //Método de implementación
+        this.fillMethod = FillMethodFactory.giveMethod(conf.getFillMethod(), crossover, mutation, service);
+        //Tipo de player
+        this.player = ClassesFactory.givePlayer(conf.getIndividualClass());
+        //Criterio de corte
+        this.cutCriteria = setupCutCriteria(conf);
+        //Escritor a socket o archivo
+        this.writer = new PrintWriter(outputStreams.get(index));
     }
 
 }

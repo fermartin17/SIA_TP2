@@ -23,7 +23,7 @@
    },
    "criteria": {
       "name": "numberofgenerations",
-      "arg1": 300
+      "arg1": 50
    },
    "fillMethod" : "fillparent",
    "population": 500,
