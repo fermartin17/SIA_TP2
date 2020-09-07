@@ -23,10 +23,18 @@
    },
    "criteria": {
       "name": "numberofgenerations",
-      "arg1": 300
+      "arg1": 50
    },
    "fillMethod" : "fillparent",
    "population": 500,
    "generationNumber": 200,
-   "individualClass":"Warrior"
+   "individualClass":"Warrior",
+   "dataConf":{
+      "setData":false,
+      "helmetPath":"/home/fer/Documents/SIA/TP2/fulldata/cascos.tsv",
+      "frontPath":"/home/fer/Documents/SIA/TP2/fulldata/pecheras.tsv",
+      "weaponsPath":"/home/fer/Documents/SIA/TP2/fulldata/armas.tsv",
+      "glovesPath":"/home/fer/Documents/SIA/TP2/fulldata/guantes.tsv",
+      "bootsPath":"/home/fer/Documents/SIA/TP2/fulldata/botas.tsv"
+   }
 }

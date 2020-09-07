@@ -2,8 +2,10 @@ package TP;
 
 import TP.Configuration.ConfigurationFile;
 import TP.Configuration.CutCriteriaMethod;
+import TP.Configuration.DataConfiguration;
 import TP.Configuration.SelectionMethod;
 import TP.Constants.Constants;
+import TP.Helpers.CSVImportHelper;
 import TP.Helpers.Factories.*;
 import TP.Interfaces.*;
 import TP.Models.CutCriteria.BaseCutCriteria;
@@ -16,6 +18,7 @@ import TP.Models.Equipment;
 import TP.Models.Genetics.Mutations.Mutation;
 import TP.Services.RedisService;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -51,9 +54,24 @@ public class Game {
     private List<BasePlayer> initialPopulation;
 
     private int generationNumber;
-
     PrintWriter writer;
 
+    public Game(DataConfiguration dataConf){
+
+        ICSVImportHelper importHelper = new CSVImportHelper();
+
+        importHelper.setData(Constants.Equipment.boots,dataConf.getBootsPath());
+        System.out.println("Boots Loaded");
+        importHelper.setData(Constants.Equipment.helmet,dataConf.getHelmetPath());
+        System.out.println("Helmets Loaded");
+        importHelper.setData(Constants.Equipment.weapons,dataConf.getWeaponsPath());
+        System.out.println("Weapons Loaded");
+        importHelper.setData(Constants.Equipment.gloves,dataConf.getGlovesPath());
+        System.out.println("Gloves Loaded");
+        importHelper.setData(Constants.Equipment.front,dataConf.getFrontPath());
+        System.out.println("Fronts Loaded");
+
+    }
     public Game(List<ConfigurationFile> configs, List<OutputStream> outputStreams){
         this.confs = configs;
         service = new RedisService();

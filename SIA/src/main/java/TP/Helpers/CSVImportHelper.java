@@ -23,13 +23,12 @@ public class CSVImportHelper implements ICSVImportHelper {
     }
 
     @Override
-    public void setData(){
+    public void setData(String key, String path){
 
         Equipment eq = new Equipment();
         String json;
 
-        //String tsvFile = "/home/fer/Documents/SIA/TP2/fulldata/guantes.tsv";
-        String tsvFile = "../../fulldata/cascos.tsv";
+        String tsvFile = path;
         BufferedReader br = null;
         String line = "";
         String tvsSplitBy = "\t";
@@ -44,11 +43,7 @@ public class CSVImportHelper implements ICSVImportHelper {
                 String[] equipment = line.split(tvsSplitBy);
                 eq.setId(Integer.parseInt(equipment[0]));
 
-                eq.setName(Constants.Equipment.helmet);
-//                eq.setName(Constants.Equipment.front);
-//                eq.setName(Constants.Equipment.weapons);
-//                eq.setName(Constants.Equipment.boots);
-//                eq.setName(Constants.Equipment.gloves);
+                eq.setName(key);
 
                 eq.setHealth(Double.parseDouble(equipment[5]));
                 eq.setAgility(Double.parseDouble(equipment[2]));
@@ -58,12 +53,7 @@ public class CSVImportHelper implements ICSVImportHelper {
 
                 json = this.gson.toJson(eq);
 
-                this.redisService.setData(Constants.Equipment.helmet,json);
-//                this.redisService.setData(Constants.Equipment.front,json);
-//                this.redisService.setData(Constants.Equipment.weapons,json);
-//                this.redisService.setData(Constants.Equipment.boots,json);
-//                this.redisService.setData(Constants.Equipment.gloves,json);
-            }
+                this.redisService.setData(key,json);            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

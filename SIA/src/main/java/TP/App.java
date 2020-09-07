@@ -13,7 +13,7 @@ import java.util.Locale;
 public class App {
     public static void main(String[] args) {
 
-        boolean multipleRuns = true;
+        boolean multipleRuns = false;
         boolean writeToGraph = false;
 
         //CSVImportHelper csvImportHelper = new CSVImportHelper();
@@ -43,25 +43,30 @@ public class App {
             Gson gson = new Gson();
             assert bufferedReader != null;
             ConfigurationFile conf = gson.fromJson(bufferedReader, ConfigurationFile.class);
-            System.out.println("configuration loaded");
-            List<ConfigurationFile> confs = new ArrayList<>();
-            confs.add(conf);
-            List<OutputStream> outputStreams = new ArrayList<>();
-            outputStreams.add(outputStream);
-            Game game = new Game(confs, outputStreams);
-            System.out.println("game created");
-            game.run();
+            if (conf.getDataConf().isSetData()) {
+                Game game = new Game(conf.getDataConf());
+                return;
+            } else {
+                System.out.println("configuration loaded");
+                List<ConfigurationFile> confs = new ArrayList<>();
+                confs.add(conf);
+                List<OutputStream> outputStreams = new ArrayList<>();
+                outputStreams.add(outputStream);
+                Game game = new Game(confs, outputStreams);
+                System.out.println("game created");
+                game.run();
 
-            if (writeToGraph) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (writeToGraph) {
+                    try {
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }else{
-            multipleRuns(args);
-        }
+            }else{
+                multipleRuns(args);
+            }
     }
 
     public static void multipleRuns(String[] args){
@@ -97,5 +102,9 @@ public class App {
         Game game = new Game(configs, outputStreams);
         System.out.println("game created");
         game.run();
-    }
+
+//        Gson gson = new Gson();
+//        System.out.println(gson.toJson(new ConfigurationFile()));
+  }
+
 }

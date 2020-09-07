@@ -20,7 +20,10 @@ public class ConfigurationFile {
     private int generationNumber;
     private String individualClass;
 
+    private DataConfiguration dataConf;
+
     public ConfigurationFile(){
+        this.dataConf = new DataConfiguration();
         this.fatherMethod_1 = new SelectionMethod();
         this.fatherMethod_2 = new SelectionMethod();
         this.individualMethod_1 = new SelectionMethod();
