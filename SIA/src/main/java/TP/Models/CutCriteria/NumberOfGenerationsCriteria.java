@@ -1,11 +1,16 @@
 package TP.Models.CutCriteria;
 
-import TP.Interfaces.ICutCriteria;
 import TP.Models.Generation;
+import lombok.Getter;
+import lombok.Setter;
 
-public class NumberOfGenerationsCriteria implements ICutCriteria {
+@Getter
+@Setter
+public class NumberOfGenerationsCriteria extends BaseCutCriteria {
 
-    private final int maxCount;
+    private int maxCount;
+
+    public NumberOfGenerationsCriteria(){}
 
     public NumberOfGenerationsCriteria(int maxCount){
         this.maxCount = maxCount;

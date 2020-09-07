@@ -1,12 +1,17 @@
 package TP.Models.CutCriteria;
 
-import TP.Interfaces.ICutCriteria;
 import TP.Models.Generation;
+import lombok.Getter;
+import lombok.Setter;
 
-public class TimeCriteria implements ICutCriteria {
+@Getter
+@Setter
+public class TimeCriteria extends BaseCutCriteria {
 
     private double startTime;
-    private final double maxTime;
+    private double maxTime;
+
+    public TimeCriteria(){}
 
     public TimeCriteria(double maxTime){
         this.startTime = -1;

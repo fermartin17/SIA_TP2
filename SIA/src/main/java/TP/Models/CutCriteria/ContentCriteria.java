@@ -1,13 +1,18 @@
 package TP.Models.CutCriteria;
 
-import TP.Interfaces.ICutCriteria;
 import TP.Models.Generation;
+import lombok.Getter;
+import lombok.Setter;
 
-public class ContentCriteria implements ICutCriteria {
+@Getter
+@Setter
+public class ContentCriteria extends BaseCutCriteria {
 
-    private final int maxHits;
-    private final double precision;
+    private int maxHits;
+    private double precision;
     private int currentHits;
+
+    public ContentCriteria(){}
 
     public ContentCriteria(int maxHits, double precision){
         this.maxHits = maxHits;
@@ -17,7 +22,7 @@ public class ContentCriteria implements ICutCriteria {
 
     @Override
     public boolean cutProgram(Generation g) {
-        if(g.getBestFitness() - g.getCurrentFitness() < precision){
+        if(g.getBestFitness().getPerformance() - g.getCurrentFitness() < precision){
             this.currentHits++;
         }else{
             currentHits = 0;

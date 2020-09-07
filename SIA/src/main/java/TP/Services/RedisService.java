@@ -7,12 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import redis.clients.jedis.Jedis;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,10 +17,20 @@ public class RedisService implements IService {
 
     private Jedis jedis;
     private Gson gson;
+    private Map<Integer, Equipment> helmets;
+    private Map<Integer, Equipment> fronts;
+    private Map<Integer, Equipment> gloves;
+    private Map<Integer, Equipment> weapons;
+    private Map<Integer, Equipment> boots;
 
     public RedisService() {
         this.jedis = new Jedis("redis://127.0.0.1:6379");
         this.gson = new Gson();
+        this.helmets = new HashMap<Integer, Equipment>();
+        this.fronts = new HashMap<Integer, Equipment>();
+        this.gloves = new HashMap<Integer, Equipment>();
+        this.weapons = new HashMap<Integer, Equipment>();
+        this.boots = new HashMap<Integer, Equipment>();
     }
 
     @Override

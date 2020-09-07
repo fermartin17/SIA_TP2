@@ -14,6 +14,11 @@ public class Equipment {
     private double pericia;
     private double resistence;
 
+    public Equipment(String name, int id){
+        this.name = name;
+        this.id = id;
+    }
+
     public Equipment(int id, String name, double health, double strength, double agility, double pericia, double resistence){
         this.id = id;
         this.name = name;

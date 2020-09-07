@@ -3,7 +3,6 @@ package TP.Models.Genetics.Crossovers;
 import TP.Interfaces.ICrossover;
 import TP.Models.Genetics.Chromosome;
 
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TwoPointsCrossOver implements ICrossover {

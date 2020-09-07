@@ -1,6 +1,5 @@
 package TP.Models.Genetics.Mutations;
 
-import TP.Interfaces.IMutation;
 import TP.Models.Genetics.Chromosome;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,18 +17,21 @@ public class GenMutation extends Mutation {
         //se debe mutar
         Chromosome ret = new Chromosome(c);
         //elegir un gen al azar
-        int r = ThreadLocalRandom.current().nextInt(0, Chromosome.S +1);
+        int r = ThreadLocalRandom.current().nextInt(0, Chromosome.S);
         //el gen de altura puede ir desde 130 hasta 200 cm
         //los genes de items pueden ir desde 0 hasta 1.000.000
         int upperBound = 1000000;
         int lowerBound = 0;
         //si vamos a tocar el gen de altura, modificar los límites
         if(r == 0){
-            upperBound = 200;
-            lowerBound = 130;
+            //buscamos aleatoriamente dentro de un rango cercano al gen original
+            upperBound = c.getChromosome()[0] + 20;
+            if(upperBound > 200) upperBound = 200;
+            lowerBound = c.getChromosome()[0] - 20;
+            if(lowerBound < 130) lowerBound = 130;
         }
         //cambiarlo por otro valor entre
-        ret.getChromosome()[r] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound +1);
+        ret.getChromosome()[r] = ThreadLocalRandom.current().nextInt(lowerBound, upperBound);
         return ret;
     }
 }

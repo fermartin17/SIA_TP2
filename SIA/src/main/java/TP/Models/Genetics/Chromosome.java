@@ -1,29 +1,29 @@
 package TP.Models.Genetics;
 
-import TP.Interfaces.IMutation;
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
+
 public class Chromosome {
 
-    private Integer[] chromosome;
     public static final int S = 6;
+    private int[] chromosome;
 
     public Chromosome(){
-        this.chromosome = new Integer[S];
+        this.chromosome = new int[S];
     }
 
     public Chromosome(Chromosome c){
-        this.chromosome = new Integer[S];
+        this.chromosome = new int[S];
         //noinspection SuspiciousSystemArraycopy
         System.arraycopy(c.chromosome, 0, this.chromosome, 0, S);
     }
 
     public Chromosome(int height, int weaponId, int bootsId,
                       int helmetId, int glovesId, int armourId){
-        this.chromosome = new Integer[S];
+        this.chromosome = new int[S];
         this.chromosome[0] = height;
         this.chromosome[1] = weaponId;
         this.chromosome[2] = bootsId;
@@ -41,8 +41,11 @@ public class Chromosome {
 
     public String toString(){
         StringBuilder ret = new StringBuilder();
-        Arrays.stream(chromosome).forEach(i -> ret.append(i.toString()).append(" "));
-        return ret.append("\n").toString();
+        for(int i : chromosome){
+            ret.append(i).append(" ");
+        }
+        ret.append("\n");
+        return ret.toString();
     }
 
 }

@@ -1,17 +1,22 @@
 package TP.Models.CutCriteria;
 
-import TP.Interfaces.ICutCriteria;
-import TP.Models.BasePlayer;
+import TP.Models.Player.BasePlayer;
 import TP.Models.Generation;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class StructureCriteria implements ICutCriteria {
+@Getter
+@Setter
+public class StructureCriteria extends BaseCutCriteria {
 
     private List<Generation> generations;
-    private final double percentage;
-    private final int generationsWindow;
+    private double percentage;
+    private int generationsWindow;
+
+    public StructureCriteria(){}
 
     public StructureCriteria(double percentage, int generationWindow){
         this.generations = new LinkedList<>();
