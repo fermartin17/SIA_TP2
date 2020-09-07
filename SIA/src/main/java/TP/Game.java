@@ -135,9 +135,9 @@ public class Game {
             if (writer != null) {
                 writer.println(String.format(Locale.US, "%08.4f", -1.0));
                 writer.flush();
+                try { outputStreams.get(i).close(); }
+                catch (IOException e){ e.printStackTrace(); }
             }
-            try { outputStreams.get(i).close(); }
-            catch (IOException e){ e.printStackTrace(); }
         }
     }
 
