@@ -10,8 +10,10 @@ Como explicaremos en la exposicion, armamos un docker con redis para que se mant
 Para esto deben seguir los siguientes pasos:
 
 1_ Bajarse docker
+
 2_ Una vez bajado docker correr el siguiente comando: docker pull femartin/sia_tp2:sia_tp
    (usando "docker images" podran ver que tiene el repositorio femartin/sia_tp2 con el tag sia_tp)
+   
 3_ levantar el docker con el siguiente comando: docker run --publish 6379:6379 --detach femartin/sia_tp2:sia_tp
 
   (en caso de tener otro proceso en ese puerto por favor utilizar el siguiente comando para matarlo: sudo kill $(sudo lsof -t -i:6379)
