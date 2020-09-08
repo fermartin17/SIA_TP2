@@ -13,8 +13,8 @@ import java.util.Locale;
 public class App {
     public static void main(String[] args) {
 
-        boolean multipleRuns = true;
-        boolean writeToGraph = false;
+        boolean multipleRuns = false;
+        boolean writeToGraph = (args.length > 0 ? true : false);
 
         //CSVImportHelper csvImportHelper = new CSVImportHelper();
         //csvImportHelper.setData();
@@ -33,7 +33,7 @@ public class App {
         }
         //noinspection ConstantConditions
         if(!multipleRuns) {
-            File file1 = new File("warrior_config.json");
+            File file1 = new File("configuration.json");
             BufferedReader bufferedReader = null;
             try {
                 bufferedReader = new BufferedReader(new FileReader(file1));
