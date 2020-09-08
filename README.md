@@ -4,6 +4,8 @@ Para correr el tp desde consola, hay que ubicarse a la altuna donde se encuentra
 
 mvn exec:java -Dexec.mainClass="TP.App"
 
+El archivo de configuracion es configuration.json.
+
 Si se desea grficar:
 
    1_ Poner en consola python3 graph.py
