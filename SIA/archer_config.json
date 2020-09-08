@@ -1,0 +1,34 @@
+{
+   "fatherMethod_1":{
+      "percentage":0.1,
+      "name":"eliteselection"
+   },
+   "fatherMethod_2":{
+      "percentage":0.9,
+      "name":"rouletteselection",
+      "arg1": 100
+   },
+   "individualMethod_1":{
+      "percentage":0.1,
+      "name":"eliteselection"
+   },
+   "individualMethod_2":{
+      "percentage":0.9,
+      "name":"rankingselection",
+      "arg1": 0.4,
+      "arg2": 10
+   },
+   "crossoverMethod":"twopointscrossover",
+   "mutation":{
+      "name":"genmutation",
+      "probability":0.4
+   },
+   "criteria": {
+      "name": "acceptablesolution",
+      "arg1": 44.5
+   },
+   "fillMethod" : "fillparent",
+   "population": 1000,
+   "generationNumber": 150,
+   "individualClass":"Archer"
+}

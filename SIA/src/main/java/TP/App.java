@@ -13,7 +13,7 @@ import java.util.Locale;
 public class App {
     public static void main(String[] args) {
 
-        boolean multipleRuns = false;
+        boolean multipleRuns = true;
         boolean writeToGraph = false;
 
         //CSVImportHelper csvImportHelper = new CSVImportHelper();
@@ -33,7 +33,7 @@ public class App {
         }
         //noinspection ConstantConditions
         if(!multipleRuns) {
-            File file1 = new File("configuration.json");
+            File file1 = new File("warrior_config.json");
             BufferedReader bufferedReader = null;
             try {
                 bufferedReader = new BufferedReader(new FileReader(file1));
@@ -74,8 +74,12 @@ public class App {
         //for(String path : args){
         //    files.add(new File(path));
         //}
-        files.add(new File("configuration.json"));
-        files.add(new File("configuration2.json"));
+        files.add(new File("warrior_config.json"));
+        files.add(new File("archer_config.json"));
+        files.add(new File("defender_config.json"));
+        files.add(new File("infiltrate_config.json"));
+        files.add(new File("warrior_fillall.json"));
+        files.add(new File("warrior_fillparent.json"));
         List<BufferedReader> bufferedReaders = new ArrayList<>(files.size());
         for(File f : files){
             try {
@@ -102,9 +106,6 @@ public class App {
         Game game = new Game(configs, outputStreams);
         System.out.println("game created");
         game.run();
-
-//        Gson gson = new Gson();
-//        System.out.println(gson.toJson(new ConfigurationFile()));
   }
 
 }

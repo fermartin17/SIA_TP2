@@ -178,7 +178,7 @@ public class Game {
         //Criterio de corte
         this.cutCriteria = setupCutCriteria(conf);
         //Escritor a socket o archivo
-        this.writer = new PrintWriter(outputStreams.get(index));
+        if(outputStreams.get(index) != null) this.writer = new PrintWriter(outputStreams.get(index));
     }
 
 }
