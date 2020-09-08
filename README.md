@@ -10,7 +10,7 @@ Si se desea grficar:
 
    1_ Poner en consola python3 graph.py
    
-   2_ Correr mvn exec:java -Dexec.mainClass="TP.App" Dexec.args="graph" 
+   2_ Correr mvn exec:java -Dexec.mainClass="TP.App" -Dexec.args="graph" 
 
 MUY IMPORTANTE!!
 
