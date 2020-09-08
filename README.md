@@ -4,6 +4,12 @@ Para correr el tp desde consola, hay que ubicarse a la altuna donde se encuentra
 
 mvn exec:java -Dexec.mainClass="TP.App"
 
+Si se desea grficar:
+
+   1_ Poner en consola python3 graph.py
+   
+   2_ Correr mvn exec:java -Dexec.mainClass="TP.App" Dexec.args="graph" 
+
 MUY IMPORTANTE!!
 
 Como explicaremos en la exposicion, armamos un docker con redis para que se mantengan almacenados los equipamientos.
